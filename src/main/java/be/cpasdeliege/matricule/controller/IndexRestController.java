@@ -14,15 +14,17 @@ public class IndexRestController {
     private String ldapUrls;
 
 	@Value("${spring.profiles.active}")
-    private String activeProfile;
+	private String activeProfile;
 
     @GetMapping("/")
     public String sayHello() {
+		System.out.println("test5");
         return "Active profile: " + activeProfile;
     }
-
+	
 	@GetMapping("/ldap")
     public String getLdapProperties() throws IOException {
         return "Urls :" + ldapUrls;
     }
+	
 }
