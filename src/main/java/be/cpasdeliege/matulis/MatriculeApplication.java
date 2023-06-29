@@ -1,4 +1,4 @@
-package be.cpasdeliege.matricule;
+package be.cpasdeliege.matulis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

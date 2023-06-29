@@ -1,4 +1,4 @@
-package be.cpasdeliege.matricule;
+package be.cpasdeliege.matulis;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

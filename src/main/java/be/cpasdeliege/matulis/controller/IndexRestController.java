@@ -1,4 +1,4 @@
-package be.cpasdeliege.matricule.controller;
+package be.cpasdeliege.matulis.controller;
 
 import java.io.IOException;
 
