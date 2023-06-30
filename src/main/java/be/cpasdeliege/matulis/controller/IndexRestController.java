@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class IndexRestController {
-
+	/* 
 	@Value("${spring.ldap.urls}")
     private String ldapUrls;
 
@@ -26,5 +26,10 @@ public class IndexRestController {
     public String getLdapProperties() throws IOException {
         return "Urls :" + ldapUrls;
     }
+	*/
 	
+	@GetMapping("/test")
+    public String getLdapProperties() throws IOException {
+        return "test";
+    }
 }
