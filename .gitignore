@@ -44,6 +44,7 @@ build/
 
 # Node
 /node*
+frontend/node*
 npm-debug.log
 yarn-error.log
 
@@ -57,8 +58,8 @@ yarn-error.log
 *.sublime-workspace
 
 # Miscellaneous
-/.angular/cache
-.sass-cache/
+frontend/.angular
+frontend/.sass-cache/
 /connect.lock
 /coverage
 /libpeerconnection.log
