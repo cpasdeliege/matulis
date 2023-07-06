@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>matulis</name>
-	<description>Demo project for Spring Boot</description>
+	<description>MATULIS permet de changer le matricule d'un utilisateur AD</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

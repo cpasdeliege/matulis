@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './core-routing.module';
 import { CoreComponent } from './components/core.component';
+import { CoreService } from './services/core.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { CoreComponent } from './components/core.component';
 	FormsModule,
 	HttpClientModule
   ],
-  providers: [],
+  providers: [CoreService],
   bootstrap: [CoreComponent]
 })
 export class CoreModule { }
