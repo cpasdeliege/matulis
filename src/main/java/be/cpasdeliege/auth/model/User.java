@@ -1,3 +1,4 @@
+/* */
 package be.cpasdeliege.auth.model;
 
 import java.util.Collection;
@@ -5,9 +6,9 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.Id;
+//import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,11 +18,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "_user")
+//@Entity
+//@Table(name = "_user")
 public class User implements UserDetails {
 	
-	@Id
+	//@Id
 	private Integer id;
 	
 	private String firstname;
