@@ -31,7 +31,7 @@ public class UserService {
     }
 	*/
 
-	public List<User> search(String u) {
+	public List<User> findByUsernameLike(String u) {
 		List<User> userList = userRepository.findByUsernameLike(u);
 		
 		if (userList == null) {

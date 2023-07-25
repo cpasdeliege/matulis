@@ -1,6 +1,9 @@
 package be.cpasdeliege.matulis.controller;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,12 +71,14 @@ public class IndexRestController {
 		object.put("key1", "value1");
 		object.put("key2", "value2");
 		*/
-		User user = userService.findByUsernameAndPassword("gomba","Zztvzztv72");
+		List<User> users = userService.findByUsernameLike("GOMBA");
 		//List<User> users = userService.findAllUsers();
-		/*
-		List<Users> =
+		
+		//List<User> users = Collections.<User>emptyList();
+		//users.add(user);
 		System.out.println("USERS COUNT : " + users.size());
-		*/
-		return user;
+		//System.out.println("USER : " + user.getUsername());
+
+		return users;
     }
 }
