@@ -1,15 +1,17 @@
 package be.cpasdeliege.auth.repository;
 
-import java.util.List;
-
-import org.springframework.data.ldap.repository.LdapRepository;
+import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.stereotype.Repository;
 
-import be.cpasdeliege.auth.model.User;
+import lombok.AllArgsConstructor;
 
 @Repository
-public interface UserRepository extends LdapRepository<User> {
-	User findByUsername(String username);
-    User findByUsernameAndPassword(String username, String password);
-    List<User> findByUsernameLikeIgnoreCase(String username);
+@AllArgsConstructor
+public class UserRepository {
+	
+	private final LdapTemplate ldapTemplate;
+
+	public boolean authenticate(String username, String password) {
+		return ldapTemplate.authenticate("ou=cpas", "(sn="+username+")", password);
+	}
 }

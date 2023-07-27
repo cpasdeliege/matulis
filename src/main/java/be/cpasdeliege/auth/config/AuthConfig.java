@@ -10,17 +10,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import be.cpasdeliege.auth.repository.UserRepository;
+import be.cpasdeliege.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
 public class AuthConfig {
-	private final UserRepository userRepository;
+	private final UserService userService;
 
 	@Bean 
 	public UserDetailsService userDetailsService() { //TODO vérifier qu'on utilise le bon Service
-		return username -> userRepository.findByUsername(username); //.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		return username -> userService.findByUsername(username); //.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 	}
 
 	@Bean

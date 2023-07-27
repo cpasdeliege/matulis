@@ -35,7 +35,6 @@ public class IndexRestController {
     private String ldapUsername;
 */
 	private final UserService userService;
-	private final LdapTemplate ldapTemplate;
 
 	/* 
 	@Value("${spring.ldap.urls}")
@@ -73,9 +72,9 @@ public class IndexRestController {
 		*/
 		//User user = userService.findByUsernameAndPassword("GOMBA Pierre","");
 		//User user = userService.findByUsername("GOMBA");
-		//boolean authenticated = ldapTemplate.authenticate("", "(sn=GOMBA)", "");
+		boolean authenticated = userService.authenticate("GOMBA","");
 		User user = userService.findByUsername("GOMBA");
-		//user.setAuthenticated(authenticated);
+		user.setAuthenticated(authenticated);
 		//List<User> users = userService.findAllUsers();
 		
 		//System.out.println("USERS COUNT : " + users.size());

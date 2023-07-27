@@ -6,14 +6,13 @@ import org.springframework.stereotype.Service;
 
 import be.cpasdeliege.auth.model.AuthenticationRequest;
 import be.cpasdeliege.auth.model.AuthenticationResponse;
-import be.cpasdeliege.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-	private final UserRepository userRepository;
+	private final UserService userService;
 	private final AuthenticationManager authenticationManager;
 	private final JwtService jwtService;
 	
@@ -21,7 +20,7 @@ public class AuthenticationService {
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
 		);
-		var user = userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword()); //orElseThrow()
+		var user = userService.findByUsername(request.getUsername()); //orElseThrow()
 		var jwtToken = jwtService.generateToken(user);
 		return AuthenticationResponse.builder().token(jwtToken).build();
 	}

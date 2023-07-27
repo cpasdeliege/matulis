@@ -12,6 +12,8 @@ import org.springframework.ldap.odm.annotations.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,13 +30,11 @@ public class User implements UserDetails {
 	private Name dn;
 	
 	@Attribute(name="cn")
-	//@DnAttribute(value="cn", index=1)
 	private String fullName;
-
+	
 	@Attribute(name = "sn")
 	private String username;
 
-	@Attribute(name = "userPassword")
 	private String password;
 
 	private boolean authenticated;
