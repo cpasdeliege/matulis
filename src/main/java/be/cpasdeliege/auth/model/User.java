@@ -1,18 +1,16 @@
 package be.cpasdeliege.auth.model;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.naming.Name;
 
 import org.springframework.ldap.odm.annotations.Attribute;
-import org.springframework.ldap.odm.annotations.DnAttribute;
 import org.springframework.ldap.odm.annotations.Entry;
 import org.springframework.ldap.odm.annotations.Id;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +35,13 @@ public class User implements UserDetails {
 
 	private String password;
 
-	private boolean authenticated;
+	private boolean authenticated; // prop test à supp
+
+	@Attribute(name = "memberOf")
+    private List<String> groupMemberships;
+
+	//@Attribute(name = "authorities")
+	//private Collection<? extends GrantedAuthority> authorities;
 
 	public String getDn() {
         return dn.toString();

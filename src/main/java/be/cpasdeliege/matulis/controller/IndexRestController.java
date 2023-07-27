@@ -65,20 +65,9 @@ public class IndexRestController {
 
 	@GetMapping("/test")
     public Object getLdapProperties() throws IOException {
-        /*
-		Map<String, Object> object = new HashMap<>();
-		object.put("key1", "value1");
-		object.put("key2", "value2");
-		*/
-		//User user = userService.findByUsernameAndPassword("GOMBA Pierre","");
-		//User user = userService.findByUsername("GOMBA");
 		boolean authenticated = userService.authenticate("GOMBA","");
 		User user = userService.findByUsername("GOMBA");
 		user.setAuthenticated(authenticated);
-		//List<User> users = userService.findAllUsers();
-		
-		//System.out.println("USERS COUNT : " + users.size());
-		//System.out.println("USER : " + user.getUsername());
 
 		return ResponseEntity.ok(user);
     }
