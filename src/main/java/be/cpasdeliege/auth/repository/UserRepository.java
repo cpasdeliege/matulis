@@ -10,6 +10,6 @@ import be.cpasdeliege.auth.model.User;
 @Repository
 public interface UserRepository extends LdapRepository<User> {
 	User findByUsername(String username);
-    User findByUsernameAndPassword(String fullName, String password);
-    List<User> findByUsernameLike(String username);
+    User findByUsernameAndPassword(String username, String password);
+    List<User> findByUsernameLikeIgnoreCase(String username);
 }

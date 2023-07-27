@@ -11,31 +11,31 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.cpasdeliege.auth.model.User;
 import be.cpasdeliege.auth.service.UserService;
+import lombok.AllArgsConstructor;
 
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class IndexRestController {
-
+/*
 	@Value("${spring.ldap.urls}")
     private String ldapUrls;
 	@Value("${spring.ldap.base}")
     private String ldapBase;
 	@Value("${spring.ldap.username}")
     private String ldapUsername;
-
+*/
 	private final UserService userService;
-	
-	@Autowired
-    public IndexRestController(UserService userService) {
-        this.userService = userService;
-    }
+	private final LdapTemplate ldapTemplate;
 
 	/* 
 	@Value("${spring.ldap.urls}")
@@ -71,14 +71,21 @@ public class IndexRestController {
 		object.put("key1", "value1");
 		object.put("key2", "value2");
 		*/
-		List<User> users = userService.findByUsernameLike("GOMBA");
+		//User user = userService.findByUsernameAndPassword("GOMBA Pierre","");
+		//User user = userService.findByUsername("GOMBA");
+		//boolean authenticated = ldapTemplate.authenticate("", "(sn=GOMBA)", "");
+		User user = userService.findByUsername("GOMBA");
+		//user.setAuthenticated(authenticated);
 		//List<User> users = userService.findAllUsers();
 		
-		//List<User> users = Collections.<User>emptyList();
-		//users.add(user);
-		System.out.println("USERS COUNT : " + users.size());
+		//System.out.println("USERS COUNT : " + users.size());
 		//System.out.println("USER : " + user.getUsername());
 
-		return users;
+		return ResponseEntity.ok(user);
+    }
+
+	@GetMapping("/hello")
+    public ResponseEntity<String> sayHello() {
+		return ResponseEntity.ok("Hello World !");
     }
 }

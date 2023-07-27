@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 public class User implements UserDetails {
 	
 	@Id
-	//@JsonIgnore
 	private Name dn;
 	
 	@Attribute(name="cn")
@@ -35,7 +34,10 @@ public class User implements UserDetails {
 	@Attribute(name = "sn")
 	private String username;
 
+	@Attribute(name = "userPassword")
 	private String password;
+
+	private boolean authenticated;
 
 	public String getDn() {
         return dn.toString();
@@ -74,40 +76,40 @@ public class User implements UserDetails {
 	/*
 	Voici des requêtes LDAP qui liste les noms des utilisateurs 
 
-Requête pour lister sans filtre
-(memberof:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)
+	Requête pour lister sans filtre
+	(memberof:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)
 
- 
+	
 
-Requête pour lister avec filtre
-(&(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)(name=B*))
-(&(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)(name=B*)(!(Displayname=*Ben*)))
+	Requête pour lister avec filtre
+	(&(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)(name=B*))
+	(&(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)(name=B*)(!(Displayname=*Ben*)))
 
- 
+	
 
-En powershell :
+	En powershell :
 
- 
+	
 
-Get-ADObject -LDAPFilter "(&(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)(name=B*))" -Properties * | Select -ExpandProperty name
-BOUTET Olivier
-BOURDOUXHE Benoit
-BODECCHI Céline
+	Get-ADObject -LDAPFilter "(&(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)(name=B*))" -Properties * | Select -ExpandProperty name
+	BOUTET Olivier
+	BOURDOUXHE Benoit
+	BODECCHI Céline
 
- 
+	
 
-rem : -ExpandProperty ne fonctionne qu'avec une seule propriété à la fois
+	rem : -ExpandProperty ne fonctionne qu'avec une seule propriété à la fois
 
- 
+	
 
-Get-ADObject -LDAPFilter "(&(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)(name=B*))" -Properties * | Select -Property name,sn,samaccountname
+	Get-ADObject -LDAPFilter "(&(objectClass=user)(memberof:1.2.840.113556.1.4.1941:=CN=_GPS_UrgenceSociale,OU=Groups,OU=Urgence Sociale,OU=Administration Centrale,OU=CPAS,DC=CpasLiege,DC=dom)(name=B*))" -Properties * | Select -Property name,sn,samaccountname
 
- 
+	
 
-name              sn         samaccountname
-----              --         --------------
-BOUTET Olivier    BOUTET     boutet
-BOURDOUXHE Benoit BOURDOUXHE bourdouxhe
-BODECCHI Céline   BODECCHI   bodecchi
+	name              sn         samaccountname
+	----              --         --------------
+	BOUTET Olivier    BOUTET     boutet
+	BOURDOUXHE Benoit BOURDOUXHE bourdouxhe
+	BODECCHI Céline   BODECCHI   bodecchi
 	*/
 }

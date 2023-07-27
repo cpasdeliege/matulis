@@ -32,7 +32,7 @@ public class UserService {
 	*/
 
 	public List<User> findByUsernameLike(String u) {
-		List<User> userList = userRepository.findByUsernameLike(u);
+		List<User> userList = userRepository.findByUsernameLikeIgnoreCase(u);
 		
 		if (userList == null) {
 			return Collections.emptyList();
