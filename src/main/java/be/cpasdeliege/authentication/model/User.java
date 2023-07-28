@@ -32,13 +32,14 @@ public class User implements UserDetails {
 	
 	@Attribute(name = "sn")
 	private String username;
+	
+	private boolean authenticated; // prop test à supp
 
 	@Attribute(name = "memberOf")
 	private Collection<GroupAuthority> authorities;
 
 	private String password;
 
-	private boolean authenticated; // prop test à supp
 
 	public String getDn() {
         return dn.toString();
@@ -51,6 +52,10 @@ public class User implements UserDetails {
 
 	public boolean hasAuthority(String authority) {
 		return authorities.stream().anyMatch(groupAuthority -> groupAuthority.getAuthority().equals(authority));
+	}
+
+	public boolean hasAuthorities(List<String> authoritiesStrings) {
+		return authorities.stream().anyMatch(groupAuthority -> authoritiesStrings.contains(groupAuthority.getAuthority()));
 	}
 
 	@Override

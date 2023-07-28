@@ -47,7 +47,11 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
 		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 			// On récupère le user via LDAP
+			System.out.println(username);
+			System.out.println(userDetails);
+			System.out.println("Test token valid");
 			if(jwtService.isTokenValid(username, userDetails)) {
+				System.out.println("Token valid");
 				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(jwt, username, userDetails.getAuthorities());
 				authToken.setDetails(
 					new WebAuthenticationDetailsSource().buildDetails(request)

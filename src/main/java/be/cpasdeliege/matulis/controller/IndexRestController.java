@@ -51,8 +51,11 @@ public class IndexRestController {
 	@GetMapping("/test")
     public Object getLdapProperties() throws IOException {
 		boolean authenticated = userService.authenticate("GOMBA","");
-		User user = userService.findByUsername("GOMBA");
-		if(user.hasAuthority("CN=_GPDB_BufferAS400,OU=DB,OU=Groups,OU=Divers,OU=CPAS,DC=CpasLiege,DC=dom")){
+		User user = userService.findByUsername("ULIS");
+		List<String> authorities = new ArrayList<>();
+		//authorities.add("CN=_GPP_BaD_CPL-APP-04,OU=Particuliers,OU=Groups,OU=Divers,OU=CPAS,DC=CpasLiege,DC=dom");
+		//authorities.add("CN=_GPDB_BufferAS400,OU=DB,OU=Groups,OU=Divers,OU=CPAS,DC=CpasLiege,DC=dom");
+		if(user.hasAuthorities(authorities)){
 			user.setAuthenticated(authenticated);
 		}
 		return ResponseEntity.ok(user);

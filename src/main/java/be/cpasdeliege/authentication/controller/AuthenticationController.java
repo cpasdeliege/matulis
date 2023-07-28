@@ -12,7 +12,7 @@ import be.cpasdeliege.authentication.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/authentication")
 @RequiredArgsConstructor
 public class AuthenticationController {
 	
