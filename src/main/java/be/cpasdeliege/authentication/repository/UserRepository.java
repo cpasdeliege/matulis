@@ -1,4 +1,4 @@
-package be.cpasdeliege.auth.repository;
+package be.cpasdeliege.authentication.repository;
 
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.stereotype.Repository;

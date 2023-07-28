@@ -1,4 +1,4 @@
-package be.cpasdeliege.auth.config;
+package be.cpasdeliege.authentication.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,12 +10,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import be.cpasdeliege.auth.service.UserService;
+import be.cpasdeliege.authentication.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
-public class AuthConfig {
+public class AuthenticationConfig {
 	private final UserService userService;
 
 	@Bean 

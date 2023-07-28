@@ -1,13 +1,12 @@
-package be.cpasdeliege.auth.service;
-
-import be.cpasdeliege.auth.model.User;
-import be.cpasdeliege.auth.repository.UserLdapRepository;
-import be.cpasdeliege.auth.repository.UserRepository;
+package be.cpasdeliege.authentication.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import be.cpasdeliege.authentication.model.User;
+import be.cpasdeliege.authentication.repository.UserLdapRepository;
+import be.cpasdeliege.authentication.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 @Service

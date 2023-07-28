@@ -12,13 +12,12 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import be.cpasdeliege.auth.model.User;
-import be.cpasdeliege.auth.service.UserService;
+import be.cpasdeliege.authentication.model.User;
+import be.cpasdeliege.authentication.service.UserService;
 import lombok.AllArgsConstructor;
 
 
@@ -37,22 +36,8 @@ public class IndexRestController {
 	private final UserService userService;
 
 	/* 
-	@Value("${spring.ldap.urls}")
-    private String ldapUrls;
-
 	@Value("${spring.profiles.active}")
 	private String activeProfile;
-
-    @GetMapping("/")
-    public String sayHello() {
-		System.out.println("test5");
-        return "Active profile: " + activeProfile;
-    }
-	
-	@GetMapping("/ldap")
-    public String getLdapProperties() throws IOException {
-        return "Urls :" + ldapUrls;
-    }
 	*/
 	
 	@RequestMapping("/resource")
@@ -67,8 +52,9 @@ public class IndexRestController {
     public Object getLdapProperties() throws IOException {
 		boolean authenticated = userService.authenticate("GOMBA","");
 		User user = userService.findByUsername("GOMBA");
-		user.setAuthenticated(authenticated);
-
+		if(user.hasAuthority("CN=_GPDB_BufferAS400,OU=DB,OU=Groups,OU=Divers,OU=CPAS,DC=CpasLiege,DC=dom")){
+			user.setAuthenticated(authenticated);
+		}
 		return ResponseEntity.ok(user);
     }
 

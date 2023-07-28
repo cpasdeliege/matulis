@@ -1,11 +1,11 @@
-package be.cpasdeliege.auth.service;
+package be.cpasdeliege.authentication.service;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import be.cpasdeliege.auth.model.AuthenticationRequest;
-import be.cpasdeliege.auth.model.AuthenticationResponse;
+import be.cpasdeliege.authentication.model.AuthenticationRequest;
+import be.cpasdeliege.authentication.model.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service

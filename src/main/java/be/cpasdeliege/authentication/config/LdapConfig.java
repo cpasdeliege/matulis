@@ -1,10 +1,10 @@
-package be.cpasdeliege.auth.config;
+package be.cpasdeliege.authentication.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.ldap.repository.config.EnableLdapRepositories;
 
 @Configuration
-@EnableLdapRepositories(basePackages = "be.cpasdeliege.auth.repository")
+@EnableLdapRepositories(basePackages = "be.cpasdeliege.authentication.repository")
 public class LdapConfig {
 	
 }

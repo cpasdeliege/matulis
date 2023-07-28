@@ -1,7 +1,4 @@
-package be.cpasdeliege.auth.config;
-
-import be.cpasdeliege.auth.service.JwtService;
-import be.cpasdeliege.auth.service.UserService;
+package be.cpasdeliege.authentication.config;
 
 import java.io.IOException;
 
@@ -13,6 +10,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import be.cpasdeliege.authentication.service.JwtService;
+import be.cpasdeliege.authentication.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

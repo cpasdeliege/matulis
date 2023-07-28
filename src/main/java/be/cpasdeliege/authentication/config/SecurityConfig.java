@@ -1,4 +1,4 @@
-package be.cpasdeliege.auth.config;
+package be.cpasdeliege.authentication.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
