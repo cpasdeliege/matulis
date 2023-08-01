@@ -1,0 +1,4 @@
+spring.ldap.urls=
+spring.ldap.base=dc=
+spring.ldap.username=
+spring.ldap.password=

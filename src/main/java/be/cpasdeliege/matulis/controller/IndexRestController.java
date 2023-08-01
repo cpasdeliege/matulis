@@ -25,14 +25,14 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api")
 @AllArgsConstructor
 public class IndexRestController {
-/*
+	/*
 	@Value("${spring.ldap.urls}")
     private String ldapUrls;
 	@Value("${spring.ldap.base}")
     private String ldapBase;
 	@Value("${spring.ldap.username}")
     private String ldapUsername;
-*/
+	*/
 	private final UserService userService;
 
 	/* 

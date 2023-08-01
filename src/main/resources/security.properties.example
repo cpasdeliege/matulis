@@ -1,0 +1,2 @@
+application.security.jwt.secret-key=
+application.security.jwt.expiration=
