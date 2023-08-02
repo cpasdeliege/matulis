@@ -32,12 +32,13 @@ public class SecurityConfig {
 			.authorizeHttpRequests(
 				auth -> {
 					auth
-						.requestMatchers("/api/authentication/**","/api/test")
+						.requestMatchers("/api/authentication/**","/api/test","/login")
 						.permitAll()
 						.anyRequest()
 						.authenticated();
 				}
 			)
+			.formLogin(form -> form.loginPage("/login").permitAll())
 			.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authenticationProvider(authenticationProvider)
 			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
