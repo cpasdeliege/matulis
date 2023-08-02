@@ -1,9 +1,11 @@
 package be.cpasdeliege.authentication.config;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,7 +18,10 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
+	/*
+	@Value("#{'${application.security.allowed-groups}'.split(',')}")
+    private List<String> allowedGroups;
+	*/
 	private final JwtAuthentificationFilter jwtAuthFilter;
 	private final AuthenticationProvider authenticationProvider;
 
@@ -24,9 +29,14 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf(csrf -> csrf.disable())
-			.authorizeHttpRequests(auth -> auth
-				.requestMatchers("/api/authentication/**","/api/test").permitAll()
-				.anyRequest().authenticated()
+			.authorizeHttpRequests(
+				auth -> {
+					auth
+						.requestMatchers("/api/authentication/**","/api/test")
+						.permitAll()
+						.anyRequest()
+						.authenticated();
+				}
 			)
 			.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authenticationProvider(authenticationProvider)

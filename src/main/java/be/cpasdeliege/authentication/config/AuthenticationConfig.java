@@ -1,24 +1,32 @@
 package be.cpasdeliege.authentication.config;
 
+import be.cpasdeliege.authentication.model.GroupAuthority;
+import be.cpasdeliege.authentication.service.UserService;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.ldap.LdapBindAuthenticationManagerFactory;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.ldap.userdetails.LdapAuthoritiesPopulator;
 
-import be.cpasdeliege.authentication.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
 public class AuthenticationConfig {
+	
+	@Value("#{'${application.security.allowed-groups}'.split(';')}")
+    private List<String> allowedGroups;
+
 	private final UserService userService;
 
 	@Bean 
@@ -45,4 +53,11 @@ public class AuthenticationConfig {
 	private PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
+	@Bean
+    public List<GroupAuthority> groupAuthorities() {
+        return allowedGroups.stream()
+            .map(GroupAuthority::new)
+            .collect(Collectors.toList());
+    }
 }

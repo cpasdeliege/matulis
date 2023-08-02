@@ -1,2 +1,3 @@
 application.security.jwt.secret-key=
 application.security.jwt.expiration=
+application.security.allowed-groups=

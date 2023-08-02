@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entry(objectClasses = { "person" }, base = "ou=CPAS")
-public class User implements UserDetails {
+public final class User implements UserDetails {
 	
 	@Id
 	private Name dn;
@@ -50,12 +50,16 @@ public class User implements UserDetails {
 		authoritiesStrings.forEach(authority -> authorities.add(new GroupAuthority(authority)));
 	}
 
-	public boolean hasAuthority(String authority) {
-		return authorities.stream().anyMatch(groupAuthority -> groupAuthority.getAuthority().equals(authority));
-	}
-
-	public boolean hasAuthorities(List<String> authoritiesStrings) {
-		return authorities.stream().anyMatch(groupAuthority -> authoritiesStrings.contains(groupAuthority.getAuthority()));
+	public boolean hasAnyAuthority(List<GroupAuthority> allowedAuthorities) {
+		boolean hasAnyAuthority = false;
+		for (GroupAuthority authority : authorities) {
+			for (GroupAuthority allowedAuthority : allowedAuthorities) {
+				if(allowedAuthority.getAuthority().equalsIgnoreCase(authority.getAuthority())){
+					hasAnyAuthority = true;
+				}
+			}
+		};
+		return hasAnyAuthority;
 	}
 
 	@Override
