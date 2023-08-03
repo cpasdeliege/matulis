@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './core-routing.module';
+import { AuthenticationModule } from '../authentication/authentication.module';
+
 import { CoreComponent } from './components/core.component';
 import { CoreService } from './services/core.service';
 
@@ -15,7 +17,8 @@ import { CoreService } from './services/core.service';
     BrowserModule,
     AppRoutingModule,
 	FormsModule,
-	HttpClientModule
+	HttpClientModule,
+	AuthenticationModule
   ],
   providers: [CoreService],
   bootstrap: [CoreComponent]

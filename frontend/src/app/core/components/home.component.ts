@@ -11,7 +11,7 @@ export class HomeComponent {
   greeting:any = {};
 
   constructor(private coreService: CoreService, private http: HttpClient) {
-    http.get('resource').subscribe(data => this.greeting = data);
+    
   }
 
   authenticated() { return this.coreService.authenticated; }
