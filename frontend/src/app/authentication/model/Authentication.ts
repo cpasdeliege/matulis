@@ -1,14 +1,11 @@
+import { Type } from "class-transformer";
+import { User } from "./User";
+
 export class Authentication {
 	private token!:string;
-	private username!:string;
 
-	constructor(
-		token:string,
-		username:string
-	) {
-		this.setToken(token);
-		this.setUsername(username);
-	}
+	@Type(() => User)
+	private user!:User;
 
 	getToken() {
 		return this.token;
@@ -18,11 +15,11 @@ export class Authentication {
 		this.token = token;
 	}
 
-	getUsername() {
-		return this.username;
+	getUser() {
+		return this.user;
 	}
 
-	setUsername(username:string) {
-		this.username = username;
+	setUser(user:User) {
+		this.user = user;
 	}
 }

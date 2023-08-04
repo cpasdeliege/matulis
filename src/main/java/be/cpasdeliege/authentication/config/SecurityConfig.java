@@ -45,7 +45,6 @@ public class SecurityConfig {
 						.permitAll();
 				}
 			)
-			//.formLogin(form -> form.loginPage("/login").permitAll())
 			.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authenticationProvider(authenticationProvider)
 			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

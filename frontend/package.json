@@ -5,9 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-	"b": "npm run b",
+    "b": "npm run b",
     "watch": "ng build --watch --configuration development",
-	"w": "npm run watch",
+    "w": "npm run watch",
     "test": "ng test"
   },
   "private": true,
@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "class-transformer": "^0.5.1",
+    "reflect-metadata": "^0.1.13",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

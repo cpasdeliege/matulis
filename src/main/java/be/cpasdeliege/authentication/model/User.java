@@ -12,6 +12,8 @@ import org.springframework.ldap.odm.annotations.Id;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,18 +30,25 @@ public final class User implements UserDetails {
 	private Name dn;
 	
 	@Attribute(name="cn")
-	private String fullName;
+	private String fullname;
 	
 	@Attribute(name = "sn")
 	private String username;
 	
-	private boolean authenticated; // prop test à supp
-
 	@Attribute(name = "memberOf")
+	@JsonIgnore
 	private Collection<GroupAuthority> authorities;
 
+	@JsonIgnore
 	private String password;
-
+	@JsonIgnore
+	boolean accountNonExpired;
+	@JsonIgnore
+	boolean accountNonLocked;
+	@JsonIgnore
+	boolean credentialsNonExpired;
+	@JsonIgnore
+	boolean enabled;
 
 	public String getDn() {
         return dn.toString();
