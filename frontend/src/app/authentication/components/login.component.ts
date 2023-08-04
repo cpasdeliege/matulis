@@ -20,19 +20,19 @@ export class LoginComponent {
 	}
   
 	login() {
-		this.authenticationService.authenticate(this.credentials.username,this.credentials.password).subscribe(
-			(data) => {
+		this.authenticationService.authenticate(this.credentials.username,this.credentials.password).subscribe({
+			next: (data) => {
 				console.log(data)
-				this.loginSuccess = data;
-				this.authenticationService.saveToken(data.token);
-				//this.router.navigateByUrl('/');
 				this.loginError = null;
+				this.loginSuccess = data;
+				//this.authenticationService.saveToken(data.token);
+				//this.router.navigateByUrl('/');
 			},
-			(error)=> {
+			error : (error)=> {
 				this.loginSuccess = null;
 				this.loginError = error;
 			}
-		);
+		});
 		return false;
 	}
 }

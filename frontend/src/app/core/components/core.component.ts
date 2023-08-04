@@ -10,19 +10,7 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './core.component.html',
 })
 export class CoreComponent {
-  title = 'matulis';
 
-  constructor(private coreService: CoreService, private http: HttpClient, private router: Router) {
-	this.coreService.authenticate(undefined, undefined);
-  }
-
-  logout() {
-	this.http.post('logout', {}).pipe(
-		finalize(() => {
-			this.coreService.authenticated = false;
-			this.router.navigateByUrl('/login');
-		})
-	).subscribe();
-  }
+	constructor(private coreService: CoreService, private http: HttpClient, private router: Router) {}
 
 }

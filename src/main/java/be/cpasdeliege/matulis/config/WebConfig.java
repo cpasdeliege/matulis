@@ -9,7 +9,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        // Redirection des URL non trouvées ("/**") vers la page principale ("/")
         registry.addViewController("/home").setViewName("forward:/");
         registry.addViewController("/login").setViewName("forward:/");
     }
