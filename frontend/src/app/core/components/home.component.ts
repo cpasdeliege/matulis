@@ -1,34 +1,26 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Authentication } from 'src/app/authentication/model/Authentication';
+import { ToolService } from 'src/app/shared/services/tool.service';
 
 @Component({
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
+	private unsubscribe$ = new Subject<void>();
 	authentication: Authentication | null = null;
-	subscriptions:Subscription[] = [];
 
-	constructor(private authenticationService:AuthenticationService) {}
+	constructor(
+		private toolService:ToolService
+	) {}
 
 	ngOnInit() {
-		let authSub = this.authenticationService.getAuthenticationSubject();
-		if(authSub) {
-			this.subscriptions.push(authSub.subscribe({
-				next: (data) => {
-					console.log("AUTHENTICATION CHANGED :");
-					console.log(data);
-				}
-			}));
-		}
+
 	}
 
 	ngOnDestroy() {
-		for (const subscription of this.subscriptions) {
-			subscription.unsubscribe();
-		}
+		this.toolService.unsubscribe(this.unsubscribe$);
 	}
 
 }

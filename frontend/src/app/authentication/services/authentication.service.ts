@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Authentication } from '../model/Authentication';
 import { BehaviorSubject } from 'rxjs';
 import { instanceToPlain, plainToClass } from 'class-transformer';
-import { Router } from '@angular/router';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,14 @@ export class AuthenticationService {
 	private authentication: Authentication | null = null;
 	private authenticationSubject: BehaviorSubject<Authentication> | null = null;
 
-	constructor(private http: HttpClient, private router: Router) {}
+	constructor(
+		private http: HttpClient, 
+		private navigationService: NavigationService
+	) {}
+
+	init() {
+		this.initCheckLocalAuthentication();
+	}
 
 	authenticate(username: string, password: string) {
 		return this.http.post<any>(`${this.baseUrl}/api/authentication/authenticate`, { username: username, password: password });
@@ -23,7 +30,7 @@ export class AuthenticationService {
 		// TODO : envoyer une requête au webservice pour invalider le token 
 		this.setAuthentication(null);
 		this.removeLocalAuthentication();
-		this.router.navigateByUrl('/login');
+		this.navigationService.redirect('/login');
 	}
 
 	isAuthenticated(){

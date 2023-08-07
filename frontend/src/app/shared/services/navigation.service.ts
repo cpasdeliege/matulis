@@ -1,23 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { Router, NavigationStart, NavigationEnd, ResolveStart } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
-  private previousUrl: string = '';
-  private currentUrl: string = '';
+	private previousUrl: string | null = null;
+	private currentUrl: string | null = null;
 
-  constructor(private router: Router) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.previousUrl = this.currentUrl;
-        this.currentUrl = event.url;
-      }
-    });
-  }
+	constructor(private router: Router) {}
 
-  getPreviousUrl() {
-    return this.previousUrl; //TODO : gérer la previousUrl en session, mais d'abord tester si ca fonctionne pas déjà
-  }
+	init() {
+		this.router.events.subscribe((event) => {
+			if (event instanceof ResolveStart) {
+				this.previousUrl = this.currentUrl;
+				this.currentUrl = event.url;
+				console.log(this.previousUrl);
+			}
+		});
+	}
+
+	redirect(redirectUrl:string) {
+		this.router.navigateByUrl(redirectUrl);
+	}
+
+	redirectToPrevious() {
+		let redirectUrl = this.previousUrl != null ? this.previousUrl : "/";
+		this.redirect(redirectUrl);
+	}
+
+	getPreviousUrl() {
+		return this.previousUrl;
+	}
 }
