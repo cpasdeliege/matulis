@@ -13,6 +13,5 @@ import { LoginComponent } from './components/login.component';
 		SharedModule,
 		AuthenticationRoutingModule
 	],
-	providers: [ ],
 })
 export class AuthenticationModule { }

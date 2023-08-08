@@ -4,8 +4,9 @@ import { Authentication } from '../model/Authentication';
 import { BehaviorSubject } from 'rxjs';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
+import { CookieService } from 'ngx-cookie-service';
 
-const AUTH_LOCAL_STORAGE_NAME = 'authentication';
+const AUTH_COOKIE_NAME = 'authentication';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class AuthenticationService {
 
 	constructor(
 		private http: HttpClient, 
-		private navigationService: NavigationService
+		private navigationService: NavigationService,
+		private cookieService: CookieService
 	) {
 		if (typeof localStorage === 'undefined' || localStorage === null) {
 			console.error('localStorage is not available.');
@@ -69,15 +71,16 @@ export class AuthenticationService {
 	/* LOCAL STORAGE */
 
 	saveLocalAuthentication() {
-		localStorage.setItem(AUTH_LOCAL_STORAGE_NAME, JSON.stringify(instanceToPlain(this.authentication)));
+		const cookieOptions = { expires: 1, secure: true, SameSite: 'Strict' };
+		this.cookieService.set(AUTH_COOKIE_NAME, JSON.stringify(instanceToPlain(this.authentication)), cookieOptions);
 	}
 
 	getLocalAuthentication() {
-		let localAuthentication = localStorage.getItem(AUTH_LOCAL_STORAGE_NAME);
-		return localAuthentication != null ? plainToInstance(Authentication, JSON.parse(localAuthentication)) : null;
+		let cookie = this.cookieService.get(AUTH_COOKIE_NAME);
+		return cookie != null && cookie != '' ? plainToInstance(Authentication, JSON.parse(cookie)) : null;
 	}
 
 	removeLocalAuthentication() {
-		localStorage.removeItem(AUTH_LOCAL_STORAGE_NAME);
+		this.cookieService.delete(AUTH_COOKIE_NAME);
 	}
 }

@@ -12,6 +12,8 @@ import be.cpasdeliege.authentication.model.AuthenticationRequest;
 import be.cpasdeliege.authentication.model.AuthenticationResponse;
 import be.cpasdeliege.authentication.model.GroupAuthority;
 import be.cpasdeliege.authentication.model.User;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -23,7 +25,7 @@ public class AuthenticationService {
 	private final JwtService jwtService;
 	private final List<GroupAuthority> groupAuthorities;
 	
-	public AuthenticationResponse authenticate(AuthenticationRequest request) throws AuthenticationException {
+	public AuthenticationResponse authenticate(AuthenticationRequest request,HttpServletResponse response) throws AuthenticationException {
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
 		);
@@ -38,7 +40,14 @@ public class AuthenticationService {
 		}
 
 		var jwtToken = jwtService.generateToken(user);
-		return AuthenticationResponse.builder().token(jwtToken).user(user).build();
+		Cookie cookie = new Cookie("token", jwtToken);
+		cookie.setHttpOnly(true);
+		//cookie.setSecure(true);
+		cookie.setMaxAge(1 * 24 * 60 * 60); // 1 day
+		cookie.setPath("/");
+		response.addCookie(cookie);
+
+		return AuthenticationResponse.builder().user(user).build();
 	}
 	
 	public boolean isTokenValid(String jwtToken) throws AuthenticationException {

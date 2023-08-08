@@ -8,12 +8,16 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.cpasdeliege.authentication.model.User;
 import be.cpasdeliege.authentication.service.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 
 
@@ -33,7 +37,11 @@ public class IndexRestController {
 	}
 
 	@GetMapping("/test")
-    public Object getLdapProperties() throws IOException {
+    public Object test(
+		@NotNull HttpServletRequest request
+	) throws IOException {
+		//@CookieValue(name = "token") String token
+	
 		boolean authenticated = userService.authenticate("GOMBA","");
 		User user = userService.findByUsername("ULIS");
 		List<String> authorities = new ArrayList<>();
@@ -42,7 +50,18 @@ public class IndexRestController {
 			user.setAuthenticated(authenticated);
 		}
 		*/
-
+		/*
+		var token = "";
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("token")) {
+					token = cookie.getValue();
+					System.out.println("COOKIE : "+ cookie.getValue());
+				}
+			}
+		}
+		*/
 		List<User> users = userService.findAllUsers();
 		return ResponseEntity.ok(users);
     }

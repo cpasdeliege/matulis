@@ -13,6 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import be.cpasdeliege.authentication.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.NotNull;
@@ -32,16 +33,36 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
 		@NotNull HttpServletResponse response,
 		@NotNull FilterChain filterChain
 	) throws ServletException, IOException {
-		final String authHeader = request.getHeader("Authorization");
-		final String jwt;
 		final String username;
-		// Check jwt Token
-		if(authHeader == null || !authHeader.startsWith("Bearer ")){
-			// Go to next filter if no jwt
+		String jwt = null;
+		
+		// On parcourt les cookies, pour récupérer le jwt
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("token")) {
+					jwt = cookie.getValue();
+					System.out.println("COOKIE : "+ cookie.getValue());
+				}
+			}
+		}
+
+		/*
+		else{
+			System.out.println("RETURN NO COOKIES");
+			return;
+		}
+		*/
+
+		if(jwt == null) {
+			System.out.println("RETURN NO JWT");
+			// Filtre suivant si pas de jwt
 			filterChain.doFilter(request, response);
 			return;
 		}
-		jwt = authHeader.substring(7); // After "Bearer "
+		
+		System.out.println("AFTER COOKIE : "+jwt);
+
 		username = jwtService.extractUsername(jwt);
 		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username);

@@ -7,10 +7,12 @@ import { AppRoutingModule } from './core-routing.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
 
 import { CoreComponent } from './components/core.component';
+import { TestComponent } from './components/test.component';
 
 @NgModule({
 	declarations: [
-		CoreComponent
+		CoreComponent,
+		TestComponent
 	],
 	imports: [
 		SharedModule,
@@ -19,7 +21,6 @@ import { CoreComponent } from './components/core.component';
 		HttpClientModule,
 		AuthenticationModule
 	],
-	providers: [],
 	bootstrap: [CoreComponent]
 })
 export class CoreModule { }
