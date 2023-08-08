@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import be.cpasdeliege.authentication.exception.AuthenticationException;
@@ -50,7 +49,7 @@ public class AuthenticationService {
 		return AuthenticationResponse.builder().user(user).build();
 	}
 	
-	public boolean isTokenValid(String jwtToken) throws AuthenticationException {
+	public AuthenticationResponse isTokenValid(String jwtToken) throws AuthenticationException {
 		String username = jwtService.extractUsername(jwtToken);
 		User user = userService.findByUsername(username);
 		
@@ -66,6 +65,6 @@ public class AuthenticationService {
 			throw new AuthenticationException("Invalid token. Generate a new one.");
 		}
 
-		return true;
+		return AuthenticationResponse.builder().user(user).build();
 	}
 }

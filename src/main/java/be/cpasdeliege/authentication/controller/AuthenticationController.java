@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.cpasdeliege.authentication.model.AuthenticationRequest;
@@ -31,9 +30,9 @@ public class AuthenticationController {
 	}
 
 	@GetMapping("/check-token")
-	public boolean checkToken(
-		@CookieValue(value = "token") String token
+	public ResponseEntity<AuthenticationResponse> checkToken(
+		@CookieValue(name = "token") String token
 	) {
-		return authenticationService.isTokenValid(token);
+		return ResponseEntity.ok(authenticationService.isTokenValid(token));
 	}
 }
