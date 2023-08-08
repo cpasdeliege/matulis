@@ -15,7 +15,6 @@ export class NavigationService {
 			if (event instanceof ResolveStart) {
 				this.previousUrl = this.currentUrl;
 				this.currentUrl = event.url;
-				console.log(this.previousUrl);
 			}
 		});
 	}

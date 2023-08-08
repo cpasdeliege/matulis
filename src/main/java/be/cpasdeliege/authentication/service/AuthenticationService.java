@@ -27,7 +27,11 @@ public class AuthenticationService {
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
 		);
-		User user = userService.findByUsername(request.getUsername()); //orElseThrow()
+		User user = userService.findByUsername(request.getUsername());
+
+		if(user == null){
+			throw new AuthenticationException("User not found");
+		}
 
 		if (!user.hasAnyAuthority(groupAuthorities)){
 			throw new AuthenticationException("User does not have the required authority.");
@@ -35,5 +39,24 @@ public class AuthenticationService {
 
 		var jwtToken = jwtService.generateToken(user);
 		return AuthenticationResponse.builder().token(jwtToken).user(user).build();
+	}
+	
+	public boolean isTokenValid(String jwtToken) throws AuthenticationException {
+		String username = jwtService.extractUsername(jwtToken);
+		User user = userService.findByUsername(username);
+		
+		if(user == null){
+			throw new AuthenticationException("User not found.");
+		}
+
+		if (!user.hasAnyAuthority(groupAuthorities)){
+			throw new AuthenticationException("User does not have the required authority.");
+		}
+
+		if(!jwtService.isTokenValid(jwtToken, user)){
+			throw new AuthenticationException("Invalid token. Generate a new one.");
+		}
+
+		return true;
 	}
 }
