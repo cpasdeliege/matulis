@@ -42,17 +42,9 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
 					jwt = cookie.getValue();
-					System.out.println("COOKIE : "+ cookie.getValue());
 				}
 			}
 		}
-
-		/*
-		else{
-			System.out.println("RETURN NO COOKIES");
-			return;
-		}
-		*/
 
 		if(jwt == null) {
 			System.out.println("RETURN NO JWT");
@@ -61,8 +53,6 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
 			return;
 		}
 		
-		System.out.println("AFTER COOKIE : "+jwt);
-
 		username = jwtService.extractUsername(jwt);
 		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(username);

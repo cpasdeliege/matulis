@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Authentication } from '../model/Authentication';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, catchError, map, of, switchMap, take, throwError } from 'rxjs';
 import { plainToClass } from 'class-transformer';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
+import { interval, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,28 +13,29 @@ export class AuthenticationService {
 	private baseUrl = 'http://cpl-app-27:8080'; //TODO : créer une config
 	private authentication: Authentication | null = null;
 	private authenticationSubject: BehaviorSubject<Authentication | null> = new BehaviorSubject<Authentication | null>(null);
+	private intervalSubscription: Subscription = new Subscription();
 
 	constructor(
 		private http: HttpClient, 
 		private navigationService: NavigationService
-	) {
-		if (typeof localStorage === 'undefined' || localStorage === null) {
-			console.error('localStorage is not available.');
-			alert("Local Storage est désactivé. Cette application en a besoin pour fonctionner.")
-		}
+	) {}
+
+	initAuthentication(authentication:Authentication | null) {
+		this.setAuthentication(authentication);
+		this.startCheckAuthenticationInterval();
 	}
 
 	getAuthentication() {
 		return this.authentication;
 	}
 
+	getAuthenticationSubject() {
+		return this.authenticationSubject;
+	}
+
 	setAuthentication(authentication:Authentication | null) {
 		this.authentication = authentication;
 		this.authenticationSubject.next(this.authentication);
-	}
-
-	getAuthenticationSubject() {
-		return this.authenticationSubject;
 	}
 
 	authenticate(username: string, password: string) {
@@ -43,6 +45,7 @@ export class AuthenticationService {
 	logout(redirect:boolean = true) {
 		// TODO : envoyer une requête au webservice pour invalider le token 
 		this.setAuthentication(null);
+		this.stopCheckAuthenticationInterval();
 		if(redirect) this.navigationService.redirect('/login');
 	}
 
@@ -50,27 +53,32 @@ export class AuthenticationService {
 		return this.authentication != null;
 	}
 
-	// TODO
-	// Fonction à lancer tous les X temps, qui check le webservice pour savoir si le token est tjrs valide
 	checkAuthentication() {
-		return this.http.get<any>(`${this.baseUrl}/api/authentication/check-token`)
-		.pipe(take(1))
+		return this.http.get<any>(`${this.baseUrl}/api/authentication/check-token`);
+	}
+
+	startCheckAuthenticationInterval() {
+		this.intervalSubscription = interval(1000)
+		.pipe(switchMap(() => this.checkAuthentication()))
 		.subscribe({
-			next: (data:any) => {
-				// Si le token est valide et le user est bien présent
-				if (data.user != null) {
-					// on peut authentifier l'utilisateur sur base de ce token
-					this.setAuthentication(plainToClass(Authentication, data));
-				} else {
-					// sinon redirection vers /login
-					this.navigationService.redirect('/login');
-				}	
+			next:(data) => {
+				console.log("check received")
+				if(data.user == null) {
+					console.log("not auth 1")
+					this.logout();
+				}
 			},
-			error: (error) => {
-				// Problème au niveau de l'API
+			error:(error) => {
 				console.error(error);
-				this.navigationService.redirect('/login');
+				console.log("not auth 2")
+				this.logout();
 			}
 		});
+	}
+	  
+	stopCheckAuthenticationInterval() {
+		if (this.intervalSubscription) {
+		  	this.intervalSubscription.unsubscribe();
+		}
 	}
 }

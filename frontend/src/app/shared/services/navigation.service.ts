@@ -23,6 +23,10 @@ export class NavigationService {
 		this.router.navigateByUrl(redirectUrl);
 	}
 
+	parseUrl(parseUrl:string) {
+		return this.router.parseUrl(parseUrl);
+	}
+
 	redirectToPrevious() {
 		let redirectUrl = this.previousUrl != null ? this.previousUrl : "/";
 		this.redirect(redirectUrl);
