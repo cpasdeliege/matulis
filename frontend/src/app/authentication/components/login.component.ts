@@ -39,11 +39,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 		.subscribe({
 			next: (data) => {
 				this.loginError = null;
-				this.authenticationService.setAuthentication(plainToClass(Authentication, data));
+				this.authenticationService.initAuthentication(plainToClass(Authentication, data));
 				this.navigationService.redirectToPrevious();
 			},
-			error: (error)=> {
-				this.loginError = error;
+			error: (data)=> {
+				this.loginError = data.error.message;
 			}
 		});
 		return false;

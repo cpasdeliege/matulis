@@ -2,6 +2,7 @@ package be.cpasdeliege.authentication.config;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +11,12 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import be.cpasdeliege.authentication.service.AuthenticationService;
 import be.cpasdeliege.authentication.service.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -24,6 +30,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtAuthentificationFilter extends OncePerRequestFilter {
 	
+
+	@Value("${application.security.jwt.cookie-name}")
+	private String cookieName;
+	
+	private final AuthenticationService authenticationService;
 	private final JwtService jwtService;
 	private final UserDetailsService userDetailsService;
 
@@ -40,31 +51,37 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("token")) {
+				if (cookie.getName().equals(cookieName)) {
 					jwt = cookie.getValue();
 				}
 			}
 		}
 
 		if(jwt == null) {
-			System.out.println("RETURN NO JWT");
 			// Filtre suivant si pas de jwt
 			filterChain.doFilter(request, response);
 			return;
 		}
-		
-		username = jwtService.extractUsername(jwt);
-		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-			// On récupère le user via LDAP
-			if(jwtService.isTokenValid(jwt, userDetails)) {
-				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(jwt, username, userDetails.getAuthorities());
-				authToken.setDetails(
-					new WebAuthenticationDetailsSource().buildDetails(request)
-				);
-				SecurityContextHolder.getContext().setAuthentication(authToken);
+
+		try {
+			username = jwtService.extractUsername(jwt);
+			if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+				// On récupère le user via LDAP
+				if(jwtService.isTokenValid(jwt, userDetails)) {
+					UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(jwt, username, userDetails.getAuthorities());
+					authToken.setDetails(
+						new WebAuthenticationDetailsSource().buildDetails(request)
+					);
+					SecurityContextHolder.getContext().setAuthentication(authToken);
+				}
+				filterChain.doFilter(request, response);
 			}
+		} catch(ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException e) {
+			// Si jwt pas valide, on supprime le cookie et on passe au fitlre suivant
+			authenticationService.removeCookie(response);
 			filterChain.doFilter(request, response);
+			return;
 		}
 	}
 }

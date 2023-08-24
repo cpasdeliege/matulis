@@ -32,7 +32,7 @@ public final class User implements UserDetails {
 	@Attribute(name="cn")
 	private String fullname;
 	
-	@Attribute(name = "sn")
+	@Attribute(name = "sAMAccountName")
 	private String username;
 	
 	@Attribute(name = "memberOf")

@@ -12,6 +12,6 @@ public class UserRepository {
 	private final LdapTemplate ldapTemplate;
 
 	public boolean authenticate(String username, String password) {
-		return ldapTemplate.authenticate("ou=cpas", "(sn="+username+")", password);
+		return ldapTemplate.authenticate("ou=cpas", "(sAMAccountName="+username+")", password);
 	}
 }

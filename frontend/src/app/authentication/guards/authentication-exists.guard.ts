@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 
 import { AuthenticationService } from "../services/authentication.service";
-import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { catchError, map, of } from 'rxjs';
 import { plainToClass } from 'class-transformer';
 import { Authentication } from '../model/Authentication';

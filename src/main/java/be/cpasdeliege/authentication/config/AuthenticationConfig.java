@@ -45,8 +45,8 @@ public class AuthenticationConfig {
 	@Bean
 	public AuthenticationManager authenticationManager(BaseLdapPathContextSource contextSource) {
 		LdapBindAuthenticationManagerFactory factory = new LdapBindAuthenticationManagerFactory(contextSource);
-		factory.setUserSearchFilter("(sn={0})");
-		factory.setUserSearchBase("ou=cpas");
+		factory.setUserSearchFilter("(&(objectCategory=person)(objectClass=user)(sAMAccountName={0}))");
+		//factory.setUserSearchBase("ou=cpas");
 		return factory.createAuthenticationManager();
 	}
 
