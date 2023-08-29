@@ -17,7 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
-@Table(name = "Log")
+@Table(name = "log")
 @Data
 public class Log {
 	
@@ -25,17 +25,13 @@ public class Log {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idLog;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-    private Date date;
+    private Date dateTime;
 
 	@Length(max=50)
 	@NotNull
 	private String username;
-
-	@Length(max=50)
-	@NotNull
-	private String host;
 
 	@Length(max=50)
 	@NotNull
@@ -49,18 +45,18 @@ public class Log {
 	private LogStatus status;
 
 	@Length(max=50)
-	private String message;
+	private String statusMessage;
 
-	private String oldValue;
+	@Length(max=50)
+	private String entityType;
+	
+	@Length(max=50)
+	private String entityId;
+
+	@Length(max=50)
+	private String propertyName;
+
+	private String originalValue;
 
 	private String newValue;
-
-	@Length(max=50)
-	private String table;
-
-	@Length(max=50)
-	private String column;
-
-	@Length(max=50)
-	private String idTarget;
 }

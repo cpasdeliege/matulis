@@ -2,13 +2,10 @@ package be.cpasdeliege.logs.service;
 
 import org.springframework.stereotype.Service;
 
-import be.cpasdeliege.logs.exception.LogException;
 import be.cpasdeliege.logs.model.Log;
 import be.cpasdeliege.logs.model.LogStatus;
 import be.cpasdeliege.logs.repository.LogRepository;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -18,37 +15,27 @@ import lombok.AllArgsConstructor;
 public class LogService {
 	private final LogRepository logRepository;
 
-
-	public void create(String username, String action, LogStatus status){create(username,action,status,null,null,null,null,null,null);}
-	public void create(String username, String action, LogStatus status, String message){create(username,action,status,message,null,null,null,null,null);}
-	public void create(String username, String action){create(username,action,null,null,null,null,null,null,null);}
+	public void create(String username, String action, String ip){create(username,action,ip,null,null,null,null,null,null,null);}
+	public void create(String username, String action, String ip, LogStatus status){create(username,action,ip,status,null,null,null,null,null,null);}
+	public void create(String username, String action, String ip, LogStatus status, String statusMessage){create(username,action,ip,status,statusMessage,null,null,null,null,null);}
 	public void create(
-		String username, String action,
-		LogStatus status, String message, String oldValue, String newValue, String table, String column, String idTarget
+		String username, String action, String ip,
+		LogStatus status, String statusMessage, String entityType, String entityId, String propertyName, String originalValue, String newValue
 	) {
-		try {
-			Log log = new Log();
-			log.setDate(new Date());
-			log.setUsername(username);
-			log.setAction(action);
+		Log log = new Log();
+		log.setDateTime(new Date());
+		log.setUsername(username);
+		log.setAction(action);
+		log.setIp(ip);
 
-            InetAddress localHost = InetAddress.getLocalHost();
-			log.setHost(localHost.getHostName());
-			log.setIp(localHost.getHostAddress());
+		log.setStatus(status);
+		log.setStatusMessage(statusMessage);
+		log.setEntityType(entityType);
+		log.setEntityId(entityId);
+		log.setPropertyName(propertyName);
+		log.setOriginalValue(originalValue);
+		log.setNewValue(newValue);
 
-			log.setStatus(status);
-			log.setOldValue(oldValue);
-			log.setNewValue(newValue);
-			log.setTable(table);
-			log.setColumn(column);
-			log.setIdTarget(idTarget);
-
-			logRepository.save(log);
-
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-			throw new LogException("Erreur lors de la récupération de l'hôte.");
-        }
-		
+		logRepository.save(log);
 	}
 }

@@ -42,7 +42,7 @@ public class AuthenticationService {
 		String logAction = "login";
 
 		if(user == null){
-			logService.create(authenticationRequest.getUsername(), logAction, LogStatus.FAILED, "username not found");
+			logService.create(authenticationRequest.getUsername(), logAction, request.getRemoteAddr(),LogStatus.FAILED, "username not found");
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Identifiant incorrect.");
 		}
 
@@ -51,12 +51,12 @@ public class AuthenticationService {
 				new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
 			);
 		} catch (org.springframework.security.core.AuthenticationException e) {
-			logService.create(authenticationRequest.getUsername(), logAction, LogStatus.FAILED, "incorrect password");
+			logService.create(authenticationRequest.getUsername(), logAction, request.getRemoteAddr(), LogStatus.FAILED, "incorrect password");
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Mot de passe incorrect.", e);
 		}
 
 		if (!user.hasAnyAuthority(groupAuthorities)){
-			logService.create(authenticationRequest.getUsername(), logAction, LogStatus.FAILED, "unauthorized");
+			logService.create(authenticationRequest.getUsername(), logAction, request.getRemoteAddr(), LogStatus.FAILED, "unauthorized");
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Vous n'avez pas les accès nécessaires.");
 		}
 
@@ -68,7 +68,7 @@ public class AuthenticationService {
 		cookie.setPath("/");
 		response.addCookie(cookie);
 
-		logService.create(authenticationRequest.getUsername(), logAction, LogStatus.SUCCESS);
+		logService.create(authenticationRequest.getUsername(), logAction, request.getRemoteAddr(), LogStatus.SUCCESS);
 
 		return AuthenticationResponse.builder().user(user).build();
 	}
