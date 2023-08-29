@@ -14,6 +14,7 @@ import be.cpasdeliege.authentication.exception.AuthenticationException;
 import be.cpasdeliege.authentication.model.AuthenticationRequest;
 import be.cpasdeliege.authentication.model.AuthenticationResponse;
 import be.cpasdeliege.authentication.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -26,10 +27,11 @@ public class AuthenticationController {
 
 	@PostMapping("/authenticate")
 	public ResponseEntity<AuthenticationResponse> authenticate(
-		@RequestBody AuthenticationRequest request,
+		@RequestBody AuthenticationRequest authenticationRequest,
+		HttpServletRequest request,
 		HttpServletResponse response
 	) {
-		return ResponseEntity.ok(authenticationService.authenticate(request,response));
+		return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest,request,response));
 	}
 
 	@GetMapping("/check-token")

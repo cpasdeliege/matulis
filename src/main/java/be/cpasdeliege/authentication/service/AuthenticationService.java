@@ -1,5 +1,6 @@
 package be.cpasdeliege.authentication.service;
 
+import java.net.InetAddress;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +15,10 @@ import be.cpasdeliege.authentication.model.AuthenticationRequest;
 import be.cpasdeliege.authentication.model.AuthenticationResponse;
 import be.cpasdeliege.authentication.model.GroupAuthority;
 import be.cpasdeliege.authentication.model.User;
+import be.cpasdeliege.logs.model.LogStatus;
+import be.cpasdeliege.logs.service.LogService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -30,25 +34,29 @@ public class AuthenticationService {
 	private final UserService userService;
 	private final AuthenticationManager authenticationManager;
 	private final JwtService jwtService;
+	private final LogService logService;
 	private final List<GroupAuthority> groupAuthorities;
 	
-	public AuthenticationResponse authenticate(AuthenticationRequest request,HttpServletResponse response) throws AuthenticationException {
-
-		User user = userService.findByUsername(request.getUsername());
+	public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest, HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+		User user = userService.findByUsername(authenticationRequest.getUsername());
+		String logAction = "login";
 
 		if(user == null){
+			logService.create(authenticationRequest.getUsername(), logAction, LogStatus.FAILED, "username not found");
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Identifiant incorrect.");
 		}
 
 		try {
 			authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+				new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
 			);
 		} catch (org.springframework.security.core.AuthenticationException e) {
+			logService.create(authenticationRequest.getUsername(), logAction, LogStatus.FAILED, "incorrect password");
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Mot de passe incorrect.", e);
 		}
 
 		if (!user.hasAnyAuthority(groupAuthorities)){
+			logService.create(authenticationRequest.getUsername(), logAction, LogStatus.FAILED, "unauthorized");
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Vous n'avez pas les accès nécessaires.");
 		}
 
@@ -59,6 +67,8 @@ public class AuthenticationService {
 		cookie.setMaxAge(jwtExpiration / 1000); // conversion millisecondes en secondes
 		cookie.setPath("/");
 		response.addCookie(cookie);
+
+		logService.create(authenticationRequest.getUsername(), logAction, LogStatus.SUCCESS);
 
 		return AuthenticationResponse.builder().user(user).build();
 	}
