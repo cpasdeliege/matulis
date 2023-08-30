@@ -1,7 +1,4 @@
-package be.cpasdeliege.authentication.config;
-
-import be.cpasdeliege.authentication.model.GroupAuthority;
-import be.cpasdeliege.authentication.service.UserService;
+package be.cpasdeliege.users.config;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import be.cpasdeliege.users.model.GroupAuthority;
+import be.cpasdeliege.users.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Configuration

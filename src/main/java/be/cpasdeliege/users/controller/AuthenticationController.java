@@ -1,4 +1,4 @@
-package be.cpasdeliege.authentication.controller;
+package be.cpasdeliege.users.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import be.cpasdeliege.authentication.model.AuthenticationRequest;
-import be.cpasdeliege.authentication.model.AuthenticationResponse;
-import be.cpasdeliege.authentication.service.AuthenticationService;
+import be.cpasdeliege.users.model.AuthenticationRequest;
+import be.cpasdeliege.users.model.AuthenticationResponse;
+import be.cpasdeliege.users.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

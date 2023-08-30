@@ -1,4 +1,4 @@
-package be.cpasdeliege.authentication.exception;
+package be.cpasdeliege.users.exception;
 
 public class AuthenticationException extends RuntimeException {
 	public AuthenticationException() {

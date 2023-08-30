@@ -1,4 +1,4 @@
-package be.cpasdeliege.authentication.config;
+package be.cpasdeliege.users.config;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import be.cpasdeliege.authentication.service.AuthenticationService;
-import be.cpasdeliege.authentication.service.JwtService;
+import be.cpasdeliege.users.service.AuthenticationService;
+import be.cpasdeliege.users.service.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import be.cpasdeliege.authentication.model.User;
-import be.cpasdeliege.authentication.service.UserService;
+import be.cpasdeliege.users.model.User;
+import be.cpasdeliege.users.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

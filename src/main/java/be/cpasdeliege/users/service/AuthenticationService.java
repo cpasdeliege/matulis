@@ -1,4 +1,4 @@
-package be.cpasdeliege.authentication.service;
+package be.cpasdeliege.users.service;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import be.cpasdeliege.authentication.exception.AuthenticationException;
-import be.cpasdeliege.authentication.model.AuthenticationRequest;
-import be.cpasdeliege.authentication.model.AuthenticationResponse;
-import be.cpasdeliege.authentication.model.GroupAuthority;
-import be.cpasdeliege.authentication.model.User;
 import be.cpasdeliege.logs.model.LogStatus;
 import be.cpasdeliege.logs.service.LogService;
+import be.cpasdeliege.users.exception.AuthenticationException;
+import be.cpasdeliege.users.model.AuthenticationRequest;
+import be.cpasdeliege.users.model.AuthenticationResponse;
+import be.cpasdeliege.users.model.GroupAuthority;
+import be.cpasdeliege.users.model.User;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -21,7 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 		AppRoutingModule,
 		HttpClientModule,
 		AuthenticationModule,
-  NgbModule
+  		NgbModule
 	],
 	bootstrap: [CoreComponent]
 })

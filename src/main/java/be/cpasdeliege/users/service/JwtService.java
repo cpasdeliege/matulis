@@ -1,4 +1,4 @@
-package be.cpasdeliege.authentication.service;
+package be.cpasdeliege.users.service;
 
 import java.security.Key;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package be.cpasdeliege.authentication.model;
+package be.cpasdeliege.users.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

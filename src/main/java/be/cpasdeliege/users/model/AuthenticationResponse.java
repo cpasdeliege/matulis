@@ -1,4 +1,4 @@
-package be.cpasdeliege.authentication.model;
+package be.cpasdeliege.users.model;
 
 import org.springframework.http.HttpStatus;
 
