@@ -1,6 +1,5 @@
 package be.cpasdeliege.authentication.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import be.cpasdeliege.authentication.exception.AuthenticationException;
 import be.cpasdeliege.authentication.model.AuthenticationRequest;
 import be.cpasdeliege.authentication.model.AuthenticationResponse;
 import be.cpasdeliege.authentication.service.AuthenticationService;
@@ -43,8 +41,10 @@ public class AuthenticationController {
 
 	@DeleteMapping("/logout")
 	public boolean logout(
+		@CookieValue(name = "token", required = false) String token,
+		HttpServletRequest request,
 		HttpServletResponse response
 	) {
-		return authenticationService.logout(response);
+		return authenticationService.logout(token,request,response);
 	}
 }

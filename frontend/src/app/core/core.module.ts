@@ -8,6 +8,7 @@ import { AuthenticationModule } from '../authentication/authentication.module';
 
 import { CoreComponent } from './components/core.component';
 import { TestComponent } from './components/test.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
 	declarations: [
@@ -19,7 +20,8 @@ import { TestComponent } from './components/test.component';
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
-		AuthenticationModule
+		AuthenticationModule,
+  NgbModule
 	],
 	bootstrap: [CoreComponent]
 })

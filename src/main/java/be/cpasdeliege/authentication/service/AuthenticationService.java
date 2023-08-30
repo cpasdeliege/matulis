@@ -1,6 +1,5 @@
 package be.cpasdeliege.authentication.service;
 
-import java.net.InetAddress;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -96,8 +95,9 @@ public class AuthenticationService {
 		return AuthenticationResponse.builder().user(user).build();
 	}
 
-	public boolean logout(HttpServletResponse response) throws AuthenticationException {
+	public boolean logout(String token, HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 		removeCookie(response);
+		logService.create(jwtService.extractUsername(token), "logout", request.getRemoteAddr(), LogStatus.SUCCESS);
 		return true;
 	}
 
