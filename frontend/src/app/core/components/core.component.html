@@ -1,11 +1,31 @@
-<h1>Matulis</h1>
-<p *ngIf="authentication">
-	Bonjour {{ authentication.getUser().getFullname()}}
-</p>
-<ul>
-	<li><a [routerLink]="['/home']">HOME</a></li>
-	<li><a [routerLink]="['/test']">TEST</a></li>
-	<li *ngIf="!authentication"><a [routerLink]="['/login']">LOGIN</a></li>
-	<li *ngIf="authentication"><button (click)="logout()">LOGOUT</button></li>
-</ul>
-<router-outlet></router-outlet>
+<nav class="navbar navbar-expand-md sticky-top bg-body-secondary" data-bs-theme="dark">
+	<div class="container">
+		<a class="navbar-brand" [routerLink]="['/home']">
+			MATULIS
+		</a>
+		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']">Home</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['/test']" [routerLinkActive]="['active']">Test</a>
+			</li>
+		</ul>
+		<ul *ngIf="!authentication" class="navbar-nav ml-auto">
+			<li class="nav-item">
+				<a class="nav-link" [routerLink]="['/login']" [routerLinkActive]="['active']"><i class="bi bi-box-arrow-in-right"></i> LOGIN</a>
+			</li>
+		</ul>
+		<ul *ngIf="authentication" class="navbar-nav ml-auto">
+			<li class="nav-item navbar-text text-white">
+				<i class="bi bi-person-circle"></i> {{ authentication.getUser().getFullname() }}
+			</li>
+			<li class="nav-item" title="Se déconnecter">
+				<button type="button" class="btn btn-link" (click)="logout()"><i class="bi bi-box-arrow-right"></i></button>
+			</li>
+		</ul>
+	</div>
+</nav>
+<div class="container">
+	<router-outlet></router-outlet>
+</div>

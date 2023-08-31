@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Authentication } from 'src/app/users/model/Authentication';
 import { AuthenticationService } from 'src/app/users/services/authentication.service';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
