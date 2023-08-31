@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from './core-routing.module';
-import { AuthenticationModule } from '../authentication/authentication.module';
+import { AuthenticationModule } from '../users/authentication.module';
 
 import { CoreComponent } from './components/core.component';
 import { TestComponent } from './components/test.component';

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Authentication } from 'src/app/authentication/model/Authentication';
+import { Authentication } from 'src/app/users/model/Authentication';
 import { ToolService } from 'src/app/shared/services/tool.service';
 
 @Component({
