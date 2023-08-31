@@ -19,6 +19,10 @@ public class UserService {
         return userLdapRepository.findByUsername(u);
     }
 
+	public List<User> findUsersByUsername(String u) {
+        return userLdapRepository.findUsersByUsername(u);
+    }
+
     public List<User> findAllUsers() {
         return userLdapRepository.findAll();
     }

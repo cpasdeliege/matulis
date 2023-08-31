@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.cpasdeliege.users.model.User;
@@ -17,10 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
@@ -28,13 +25,14 @@ public class IndexRestController {
 
 	private final UserService userService;
 
-	@RequestMapping("/resource")
-	public Map<String,Object> home() {
-	  Map<String,Object> model = new HashMap<String,Object>();
-	  model.put("id", UUID.randomUUID().toString());
-	  model.put("content", "Hello World");
-	  return model;
-	}
+	@GetMapping("/search-users")
+    public Object searchUsers(
+		@RequestParam String username,
+		@NotNull HttpServletRequest request
+	) throws IOException {
+		List<User> users = userService.findUsersByUsername(username);
+		return ResponseEntity.ok(users);
+    }
 
 	@GetMapping("/test")
     public Object test(

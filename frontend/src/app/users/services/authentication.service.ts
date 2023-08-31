@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Authentication } from '../model/Authentication';
-import { BehaviorSubject, Observable, catchError, map, of, switchMap, take, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, } from 'rxjs';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { interval, Subscription } from 'rxjs';
 
