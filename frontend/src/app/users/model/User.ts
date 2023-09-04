@@ -2,6 +2,7 @@ export class User {
 	private dn!:string;
 	private username!:string;
 	private fullname!:string;
+	public employeeId!:string;
 
 	getDn() {
 		return this.dn;
@@ -25,5 +26,13 @@ export class User {
 
 	setFullname(fullname:string) {
 		this.fullname = fullname;
+	}
+
+	getEmployeeId() {
+		return this.employeeId;
+	}
+
+	setEmployeeId(employeeId:string) {
+		this.employeeId = employeeId;
 	}
 }

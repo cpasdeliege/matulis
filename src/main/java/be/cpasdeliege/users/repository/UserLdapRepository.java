@@ -11,4 +11,5 @@ import be.cpasdeliege.users.model.User;
 public interface UserLdapRepository extends LdapRepository<User> {
 	User findByUsername(String username);
 	List<User> findUsersByUsername(String username);
+	List<User> findUsersByFullnameContaining(String fullname);
 }

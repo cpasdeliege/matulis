@@ -14,4 +14,8 @@ export class UserService {
 	search(username: string) {
 		return this.http.get<any>(`${this.baseUrl}/api/search-users`, { params: { username: username } });
 	}
+
+	update(user:any) {
+		return this.http.put<any>(`${this.baseUrl}/api/user/update`, user);
+	}
 }

@@ -39,6 +39,9 @@ public final class User implements UserDetails {
 	@JsonIgnore
 	private Collection<GroupAuthority> authorities;
 
+	@Attribute(name = "employeeId")
+	private String employeeId;
+
 	@JsonIgnore
 	private String password;
 	@JsonIgnore

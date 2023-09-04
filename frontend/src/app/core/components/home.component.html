@@ -1,4 +1,20 @@
 <h2>Rechercher un utilisateur</h2>
 
-<label class="form-label" for="">Nom</label>
+<label class="form-label">Nom</label>
 <input class="form-control" type="text" (keyup)="search()" [(ngModel)]="searchUsername">
+<div class="form-text">La recherche ne se lance qu'à partir de 3 caractères.</div>
+<div class="row">
+	<div class="col">
+		<ul>
+			<li *ngFor="let user of users">
+				{{ user.getFullname() }} <button (click)="select(user)" class="btn btn-primary">Modifier</button>
+			</li>
+		</ul>
+	</div>
+	<div *ngIf="selectedUser" class="col">
+		<h3>{{ selectedUser.getFullname() }}</h3>
+		<label class="form-label">Matricule :</label>
+		<input class="form-control" type="text" [(ngModel)]="selectedUser.employeeId">
+		<button (click)="updateSelectedUser()" class="btn btn-primary">Modifier</button>
+	</div>
+</div>

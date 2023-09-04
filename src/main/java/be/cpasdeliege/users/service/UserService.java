@@ -23,11 +23,15 @@ public class UserService {
         return userLdapRepository.findUsersByUsername(u);
     }
 
+	public List<User> findUsersByFullnameContaining(String u) {
+        return userLdapRepository.findUsersByFullnameContaining(u);
+    }
+
     public List<User> findAllUsers() {
         return userLdapRepository.findAll();
     }
 
-    public User saveUser(User user) {
+    public User save(User user) {
         return userLdapRepository.save(user);
     }
 	

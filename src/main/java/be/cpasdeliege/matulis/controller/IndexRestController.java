@@ -30,7 +30,7 @@ public class IndexRestController {
 		@RequestParam String username,
 		@NotNull HttpServletRequest request
 	) throws IOException {
-		List<User> users = userService.findUsersByUsername(username);
+		List<User> users = userService.findUsersByFullnameContaining(username);
 		return ResponseEntity.ok(users);
     }
 
