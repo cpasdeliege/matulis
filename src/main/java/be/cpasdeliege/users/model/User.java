@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.naming.Name;
+import javax.naming.ldap.LdapName;
 
 import org.springframework.ldap.odm.annotations.Attribute;
 import org.springframework.ldap.odm.annotations.Entry;
@@ -12,8 +13,14 @@ import org.springframework.ldap.odm.annotations.Id;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import be.cpasdeliege.users.utils.LdapNameDeserializer;
+import be.cpasdeliege.users.utils.LdapNameSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +34,8 @@ import lombok.NoArgsConstructor;
 public final class User implements UserDetails {
 	
 	@Id
+	@JsonSerialize(using = LdapNameSerializer.class)
+	@JsonDeserialize(using = LdapNameDeserializer.class)
 	private Name dn;
 	
 	@Attribute(name="cn")
@@ -39,7 +48,7 @@ public final class User implements UserDetails {
 	@JsonIgnore
 	private Collection<GroupAuthority> authorities;
 
-	@Attribute(name = "employeeId")
+	@Attribute(name = "employeeID")
 	private String employeeId;
 
 	@JsonIgnore
@@ -50,12 +59,6 @@ public final class User implements UserDetails {
 	boolean accountNonLocked;
 	@JsonIgnore
 	boolean credentialsNonExpired;
-	@JsonIgnore
-	boolean enabled;
-
-	public String getDn() {
-        return dn.toString();
-    }
 
 	public void setAuthorities(List<String> authoritiesStrings) {
 		authorities = new ArrayList<>();
