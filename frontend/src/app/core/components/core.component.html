@@ -1,31 +1,42 @@
-<nav class="navbar navbar-expand-md sticky-top bg-body-secondary" data-bs-theme="dark">
-	<div class="container">
-		<a class="navbar-brand" [routerLink]="['/home']">
-			MATULIS
-		</a>
-		<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-			<li class="nav-item">
-				<a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']">Home</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" [routerLink]="['/test']" [routerLinkActive]="['active']">Test</a>
-			</li>
-		</ul>
-		<ul *ngIf="!authentication" class="navbar-nav ml-auto">
-			<li class="nav-item">
-				<a class="nav-link" [routerLink]="['/login']" [routerLinkActive]="['active']"><i class="bi bi-box-arrow-in-right"></i> LOGIN</a>
-			</li>
-		</ul>
-		<ul *ngIf="authentication" class="navbar-nav ml-auto">
-			<li class="nav-item navbar-text text-white">
-				<i class="bi bi-person-circle"></i> {{ authentication.getUser().getFullname() }}
-			</li>
-			<li class="nav-item" title="Se déconnecter">
-				<button type="button" class="btn btn-link" (click)="logout()"><i class="bi bi-box-arrow-right"></i></button>
-			</li>
-		</ul>
+<div class="cpas-wrapper">
+	<div class="cpas-content">
+		<nav class="navbar navbar-expand-md sticky-top bg-body-secondary" data-bs-theme="dark">
+			<div class="container">
+				<a class="navbar-brand" [routerLink]="['/home']">
+					MAT<span class="text-primary">ULIS</span>
+				</a>
+				<!--
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" [routerLink]="['/test']" [routerLinkActive]="['active']">Test</a>
+					</li>
+				</ul>
+				-->
+				<ul *ngIf="!authentication" class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link cpas-align-icon" [routerLink]="['/login']" [routerLinkActive]="['active']"><span class="material-icons cpas-icon">login</span>  Se connecter</a>
+					</li>
+				</ul>
+				<ul *ngIf="authentication" class="navbar-nav ml-auto">
+					<li class="nav-item navbar-text text-white cpas-align-icon">
+						<span class="material-icons-outlined cpas-icon">account_circle</span> {{ authentication.getUser().getFullname() }}
+					</li>
+					<li class="nav-item cpas-align-icon ms-3" title="Se déconnecter">
+						<button type="button" class="cpas-icon-link" (click)="logout()"><span class="material-icons">logout</span></button>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="container">
+			<router-outlet></router-outlet>
+		</div>
 	</div>
-</nav>
-<div class="container">
-	<router-outlet></router-outlet>
+	<footer>
+		<div class="container">
+			<img src="assets/img/logo-white.png" alt="CPAS de Liège">
+		</div>
+	</footer>
 </div>

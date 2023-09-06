@@ -1,20 +1,39 @@
-<h2>Rechercher un utilisateur</h2>
+<div class="mt-5"></div>
+<h1>Rechercher un utilisateur</h1>
 
-<label class="form-label">Nom</label>
-<input class="form-control" type="text" (keyup)="search()" [(ngModel)]="searchUsername">
-<div class="form-text">La recherche ne se lance qu'à partir de 3 caractères.</div>
 <div class="row">
-	<div class="col">
-		<ul>
-			<li *ngFor="let user of users">
-				{{ user.getFullname() }} <button (click)="select(user)" class="btn btn-primary">Modifier</button>
-			</li>
-		</ul>
+	<div class="col-6">
+		<div class="row">
+			<div class="col-8">
+				<div class="mb-5">
+					<label class="form-label">Nom :</label>
+					<input class="form-control" type="text" (keyup)="search()" [(ngModel)]="searchUsername">
+					<div class="form-text">La recherche ne se lance qu'à partir de 3 caractères.</div>		
+				</div>
+				<ul class="cpas-list">
+					<li class="d-flex" *ngFor="let user of users">
+						<button (click)="select(user)" class="cpas-icon-link cpas-align-icon">
+							{{ user.getFullname() }} <span class="material-icons-outlined ms-1">edit</span>
+						</button>
+					</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 	<div *ngIf="selectedUser" class="col">
-		<h3>{{ selectedUser.getFullname() }}</h3>
-		<label class="form-label">Matricule :</label>
-		<input class="form-control" type="text" [(ngModel)]="selectedUser.employeeId">
-		<button (click)="updateSelectedUser()" class="btn btn-primary">Modifier</button>
+		<div class="card">
+			<div class="card-body">
+				<h3>{{ selectedUser.getFullname() }}</h3>
+				<div class="row">
+					<div class="col-4">
+						<div class="mb-3">
+							<label class="form-label">Matricule :</label>
+							<input class="form-control" type="text" [(ngModel)]="selectedUser.employeeId">
+						</div>
+						<button (click)="updateSelectedUser()" class="btn btn-primary">Modifier</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

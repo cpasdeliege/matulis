@@ -1,15 +1,77 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* Importing Bootstrap SCSS file. */
+@import '@material-design-icons/font';
+@import 'fonts';
 @import '_variables';
 @import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons';
+@import 'mixins';
 
-
+/* GENERAL */
 h1 {
+	font-size: 2rem;
+    font-weight: 700;
 	margin-bottom: 2rem;
+}
+
+h3{
+	font-size: 25px;
+    font-weight: 400;
+}
+
+a {
+	text-decoration: none;
+}
+
+footer {
+	background-color: $dark;
+	color: white;
+	padding: map-get($map: $spacers, $key: 3) 0;
+	text-align: center;
+	img {
+		width: 40px;
+	}
+}
+
+/* GENERAL CUSTOM */
+.cpas-wrapper {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+/* OVERRIDE BOOTSTRAP */
+.navbar-brand{
+	font-weight: 700;
+	letter-spacing: 2px;
 }
 
 .card {
 	background-color: white;
+}
+
+.form-control{
+	background-color: white;
+}
+
+/* CUSTOM */
+.cpas-align-icon{
+	display: flex;
+	align-items: center;
+	.cpas-icon {
+		margin-right: map-get($map: $spacers, $key: 1)
+	}
+}
+
+.cpas-list{
+	list-style-type: none;
+	padding-left: 0;
+	li {
+		margin-bottom: map-get($map: $spacers, $key: 1)
+	}
+}
+
+button.cpas-icon-link{
+	@extend a;
+	display: flex;
+	padding: 0;
+    border: 0;
+    background: 0;
 }
