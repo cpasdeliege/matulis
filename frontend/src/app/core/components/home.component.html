@@ -6,13 +6,12 @@
 		<div class="row">
 			<div class="col-8">
 				<div class="mb-5">
-					<button (click)="showSuccessTest()" class="btn btn-primary">Toast test</button>
 					<label class="form-label">Nom :</label>
 					<div class="position-relative">
 						<input class="form-control" type="text" (keyup)="search()" [(ngModel)]="searchUsername">
 						<span *ngIf="loadingSearch" class="cpas-icon-loader cpas-btn-loader"></span>
 					</div>
-					<div class="form-text">La recherche ne se lance qu'à partir de 3 caractères.</div>		
+					<div class="form-text">La recherche ne se lance qu'à partir de 3 caractères.</div>
 				</div>
 				<ul class="cpas-list">
 					<li class="d-flex" *ngFor="let user of users">

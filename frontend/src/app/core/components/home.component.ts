@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 	searchUsername: string = "";
 	users: any = null;
 	selectedUser: User | null = null;
+	searchTimeout:any = null;
 
 	constructor(
 		private toolService: ToolService,
@@ -35,25 +36,34 @@ export class HomeComponent implements OnInit, OnDestroy {
 	}
 
 	search() {
+		clearTimeout(this.searchTimeout);
 		this.toolService.unsubscribe(this.unsubscribe$);
-		if(this.searchUsername.length >= 3) {
-			this.loadingSearch = true;
-			this.userService.search(this.searchUsername).pipe(takeUntil(this.unsubscribe$)).subscribe({
-				next : (data) => {
-					this.users = plainToClass(User, data)
-					this.loadingSearch = false;
-				},
-				error : () => {
-					this.loadingSearch = false;
-				}
-			})
-		} else {
-			this.users = null;
-		}
+
+		this.searchTimeout = setTimeout(() => {
+			if(this.searchUsername.length >= 3) {
+				this.loadingSearch = true;
+				this.userService.search(this.searchUsername).pipe(takeUntil(this.unsubscribe$)).subscribe({
+					next : (data) => {
+						this.unselect(); // on déselectionne après une recherche pour éviter des erreurs d'encodage
+						this.users = plainToClass(User, data)
+						this.loadingSearch = false;
+					},
+					error : () => {
+						this.loadingSearch = false;
+					}
+				})
+			} else {
+				this.users = null;
+			}
+		}, 250)
 	}
 
 	select(user:User) {
 		this.selectedUser = user;
+	}
+
+	unselect() {
+		this.selectedUser = null;
 	}
 
 	updateSelectedUser() {
@@ -61,16 +71,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 		this.userService.update(instanceToPlain(this.selectedUser)).subscribe({
 			next: (data) => {
 				console.log(data);
-				this.toastService.show('Matricule modifié', { classname: 'bg-success text-light', delay: 3000 });
+				this.toastService.show('Matricule modifié', { type: 'success' });
 				this.loadingEmployeeId = false;
 			},
 			error : () =>  {
+				this.toastService.show('Erreur lors de la modification', { type: 'danger' });
 				this.loadingEmployeeId = false;
 			}
 		})
-	}
-
-	showSuccessTest(){
-		this.toastService.show('Matricule modifié', { classname: 'bg-success text-light', delay: 3000 });
 	}
 }

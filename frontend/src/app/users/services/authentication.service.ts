@@ -4,12 +4,12 @@ import { Authentication } from '../model/Authentication';
 import { BehaviorSubject, Observable, switchMap, } from 'rxjs';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 import { interval, Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-	private baseUrl = 'http://cpl-app-27:8080'; //TODO : créer une config
 	private authentication: Authentication | null = null;
 	private authenticationSubject: BehaviorSubject<Authentication | null> = new BehaviorSubject<Authentication | null>(null);
 	private intervalSubscription: Subscription = new Subscription();
@@ -41,11 +41,11 @@ export class AuthenticationService {
 	}
 
 	authenticate(username: string, password: string) {
-		return this.http.post<any>(`${this.baseUrl}/api/authentication/authenticate`, { username: username, password: password });
+		return this.http.post<any>(`${environment.apiUrl}/api/authentication/authenticate`, { username: username, password: password });
 	}
 
 	logout(redirect:boolean = true) {
-		this.http.delete<any>(`${this.baseUrl}/api/authentication/logout`).subscribe(
+		this.http.delete<any>(`${environment.apiUrl}/api/authentication/logout`).subscribe(
 			(deleted) => {
 				if(deleted) {
 					this.setAuthentication(null);
@@ -61,7 +61,7 @@ export class AuthenticationService {
 	}
 
 	checkAuthentication() {
-		this.checkAuthenticationSubscription = this.http.get<any>(`${this.baseUrl}/api/authentication/check-token`);
+		this.checkAuthenticationSubscription = this.http.get<any>(`${environment.apiUrl}/api/authentication/check-token`);
 		return this.checkAuthenticationSubscription;
 	}
 
