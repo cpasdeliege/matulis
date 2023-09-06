@@ -14,6 +14,7 @@ import { ToolService } from 'src/app/shared/services/tool.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 	
+	loading : boolean = false;
 	private unsubscribe$ = new Subject<void>();
 
 	credentials = {username: '', password: ''};
@@ -34,18 +35,22 @@ export class LoginComponent implements OnInit, OnDestroy {
 	}
 
 	login() {
-		this.authenticationService.authenticate(this.credentials.username,this.credentials.password)
-		.pipe(takeUntil(this.unsubscribe$))
-		.subscribe({
-			next: (data) => {
-				this.loginError = null;
-				this.authenticationService.initAuthentication(plainToClass(Authentication, data));
-				this.navigationService.redirectToPrevious();
-			},
-			error: (data)=> {
-				this.loginError = data.error.message;
-			}
-		});
-		return false;
+		if(!this.loading) {
+			this.loading = true;
+			this.authenticationService.authenticate(this.credentials.username,this.credentials.password)
+			.pipe(takeUntil(this.unsubscribe$))
+			.subscribe({
+				next: (data) => {
+					this.loginError = null;
+					this.authenticationService.initAuthentication(plainToClass(Authentication, data));
+					this.loading = false;
+					this.navigationService.redirectToPrevious();
+				},
+				error: (data)=> {
+					this.loginError = data.error.message;
+					this.loading = false;
+				}
+			});
+		}
 	}
 }

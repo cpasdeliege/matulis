@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '@material-design-icons/font';
 @import 'fonts';
 @import '_variables';
@@ -74,4 +76,30 @@ button.cpas-icon-link{
 	padding: 0;
     border: 0;
     background: 0;
+}
+
+$cpas-icon-loard-width: 25px;
+
+.cpas-icon-loader {
+	display: block;
+	border: 3px solid darken($light, 5%);
+	border-top: 3px solid $primary;
+	//border-bottom: 3px solid $primary;
+	border-radius: 50%; 
+	width: $cpas-icon-loard-width;
+	height: $cpas-icon-loard-width;
+	animation: spin 1s linear infinite;
+	&.cpas-btn-loader {
+		// Le parent doit être en position relative !
+		position: absolute;
+		left: 100%;
+		top: 50%;
+		margin-left: 15px;
+		margin-top: math.div(-$cpas-icon-loard-width, 2);
+	}
+}
+  
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
 }
