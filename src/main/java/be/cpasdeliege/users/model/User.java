@@ -38,17 +38,23 @@ public final class User implements UserDetails {
 	@JsonDeserialize(using = LdapNameDeserializer.class)
 	private Name dn;
 	
-	@Attribute(name="cn")
+	@Attribute(name="name") // aussi cn ou displayName
 	private String fullname;
-	
-	@Attribute(name = "sAMAccountName")
+	/*
+	@Attribute(name="givenName")
+	private String firstname;
+
+	@Attribute(name="sn")
+	private String lastname;
+	*/
+	@Attribute(name="sAMAccountName")
 	private String username;
 	
-	@Attribute(name = "memberOf")
+	@Attribute(name="memberOf")
 	@JsonIgnore
 	private Collection<GroupAuthority> authorities;
 
-	@Attribute(name = "employeeID")
+	@Attribute(name="employeeID")
 	private String employeeId;
 
 	@JsonIgnore

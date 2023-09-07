@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="col-8">
 				<div class="mb-5">
-					<label class="form-label">Nom :</label>
+					<label class="form-label">Nom / prénom :</label>
 					<div class="position-relative">
 						<input class="form-control" type="text" (keyup)="search()" [(ngModel)]="searchUsername">
 						<span *ngIf="loadingSearch" class="cpas-icon-loader cpas-btn-loader"></span>
@@ -31,10 +31,10 @@
 					<div class="col-4">
 						<div class="mb-3">
 							<label class="form-label">Matricule :</label>
-							<input class="form-control" type="text" [(ngModel)]="selectedUser.employeeId" (keyup.enter)="updateSelectedUser()">
+							<input class="form-control" type="text" (ngModelChange)="lock(false)" [(ngModel)]="newEmployeeId" (keyup.enter)="updateSelectedUser()">
 						</div>
 						<div class="d-inline-block position-relative">
-							<button (click)="updateSelectedUser()" class="btn btn-primary">Modifier</button>
+							<button [disabled]="updateLock" (click)="updateSelectedUser()" class="btn btn-primary">Modifier</button>
 							<span *ngIf="loadingEmployeeId" class="cpas-icon-loader cpas-btn-loader"></span>
 						</div>
 					</div>
