@@ -11,10 +11,10 @@ export class UserService {
 	) {}
 
 	search(username: string) {
-		return this.http.get<any>(`${environment.apiUrl}/api/search-users`, { params: { username: username } });
+		return this.http.get<any>(`${environment.apiUrl}/search-users`, { params: { username: username } });
 	}
 
 	update(user:any) {
-		return this.http.put<any>(`${environment.apiUrl}/api/user/update`, user);
+		return this.http.put<any>(`${environment.apiUrl}/user/update`, user);
 	}
 }

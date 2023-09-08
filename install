@@ -1,0 +1,4 @@
+chmod +x build-prod
+cd frontend
+npm install
+cd ..

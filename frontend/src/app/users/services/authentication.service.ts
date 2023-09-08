@@ -41,11 +41,11 @@ export class AuthenticationService {
 	}
 
 	authenticate(username: string, password: string) {
-		return this.http.post<any>(`${environment.apiUrl}/api/authentication/authenticate`, { username: username, password: password });
+		return this.http.post<any>(`${environment.apiUrl}/authentication/authenticate`, { username: username, password: password });
 	}
 
 	logout(redirect:boolean = true) {
-		this.http.delete<any>(`${environment.apiUrl}/api/authentication/logout`).subscribe(
+		this.http.delete<any>(`${environment.apiUrl}/authentication/logout`).subscribe(
 			(deleted) => {
 				if(deleted) {
 					this.setAuthentication(null);
@@ -61,7 +61,7 @@ export class AuthenticationService {
 	}
 
 	checkAuthentication() {
-		this.checkAuthenticationSubscription = this.http.get<any>(`${environment.apiUrl}/api/authentication/check-token`);
+		this.checkAuthenticationSubscription = this.http.get<any>(`${environment.apiUrl}/authentication/check-token`);
 		return this.checkAuthenticationSubscription;
 	}
 

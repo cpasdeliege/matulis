@@ -106,6 +106,7 @@
 		</profile>
 	</profiles>
 	<build>
+		<finalName>matulis</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

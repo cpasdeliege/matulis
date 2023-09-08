@@ -37,6 +37,7 @@
           },
           "configurations": {
             "production": {
+			  "baseHref": "/matulis/",
               "budgets": [
                 {
                   "type": "initial",
@@ -52,6 +53,7 @@
               "outputHashing": "all"
             },
             "development": {
+			  "baseHref": "/",
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
