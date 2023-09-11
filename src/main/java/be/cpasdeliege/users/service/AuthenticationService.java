@@ -29,6 +29,10 @@ public class AuthenticationService {
 	private int jwtExpiration;
 	@Value("${application.security.jwt.cookie-name}")
 	private String cookieName;
+	@Value("${application.security.jwt.cookie-domain}")
+	private String cookieDomain;
+	@Value("${application.security.jwt.cookie-path}")
+	private String cookiePath;
 
 	private final UserService userService;
 	private final AuthenticationManager authenticationManager;
@@ -61,10 +65,11 @@ public class AuthenticationService {
 
 		var jwtToken = jwtService.generateToken(user);
 		Cookie cookie = new Cookie(cookieName, jwtToken);
+		cookie.setDomain(cookieDomain);
+		cookie.setPath(cookiePath);
 		cookie.setHttpOnly(true);
-		//cookie.setSecure(true);
+		//cookie.setSecure(true); // Pour n'autoriser que sur des connexions https, mais nous sommes toujours en http pour le moment
 		cookie.setMaxAge(jwtExpiration / 1000); // conversion millisecondes en secondes
-		cookie.setPath("/");
 		response.addCookie(cookie);
 
 		logService.create(authenticationRequest.getUsername(), logAction, request.getRemoteAddr(), LogStatus.SUCCESS);
@@ -103,10 +108,11 @@ public class AuthenticationService {
 
 	public void removeCookie(HttpServletResponse response) {
 		Cookie cookie = new Cookie(cookieName, null);
+		cookie.setDomain(cookieDomain);
+		cookie.setPath(cookiePath);
 		cookie.setMaxAge(0); // pour supprimer le cookie
 		//cookie.setSecure(true);
 		cookie.setHttpOnly(true);
-		cookie.setPath("/");
 		response.addCookie(cookie);
 	}
 }
