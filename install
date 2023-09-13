@@ -1,4 +1,4 @@
 chmod +x build-prod
-cd frontend
-npm install
-cd ..
+chmod +x run-back
+chmod +x run-front
+cd frontend && npm install && cd ..
