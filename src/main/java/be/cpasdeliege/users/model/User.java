@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.naming.Name;
-import javax.naming.ldap.LdapName;
 
 import org.springframework.ldap.odm.annotations.Attribute;
 import org.springframework.ldap.odm.annotations.Entry;
@@ -13,9 +12,7 @@ import org.springframework.ldap.odm.annotations.Id;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -30,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entry(objectClasses = { "person" }, base = "ou=CPAS")
+@Entry(objectClasses = { "person" }, base = "OU=CPAS")
 public final class User implements UserDetails {
 	
 	@Id

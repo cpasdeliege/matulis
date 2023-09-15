@@ -46,12 +46,11 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
 	) throws ServletException, IOException {
 		final String username;
 		String jwt = null;
-		
 		// On parcourt les cookies, pour récupérer le jwt
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals(cookieName)) {
+				if (cookie.getName().equals("token")) {
 					jwt = cookie.getValue();
 				}
 			}
