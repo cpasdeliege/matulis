@@ -27,7 +27,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 	) {}
   
 	ngOnInit() {
-
+		if(this.authenticationService.isAuthenticated()){
+			this.navigationService.redirect('/home');
+		}
 	}
 
 	ngOnDestroy() {
