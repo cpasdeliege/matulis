@@ -1,4 +1,2 @@
-cd frontend
-npm run build
-cd ..
-mvn package
+cd frontend && npm run build && cd ..
+mvn package -P prod

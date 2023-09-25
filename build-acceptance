@@ -1,0 +1,2 @@
+cd frontend && npm run build-acceptance && cd ..
+mvn package -P acceptance

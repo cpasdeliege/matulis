@@ -5,7 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "b": "npm run b",
+    "b": "npm run build",
+    "build-acceptance": "ng build --configuration acceptance",
+	"ba": "npm run build-acceptance",
     "watch": "ng build --watch --configuration development",
     "w": "npm run watch",
     "test": "ng test"
