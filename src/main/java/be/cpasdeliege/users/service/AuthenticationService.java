@@ -49,12 +49,6 @@ public class AuthenticationService {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Identifiant incorrect.");
 		}
 
-		for(GroupAuthority authority : user.getAuthorities()){
-			System.out.println(authority.getAuthority());
-		}
-		
-		//System.out.println(user.getAuthorities());
-
 		try {
 			authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
