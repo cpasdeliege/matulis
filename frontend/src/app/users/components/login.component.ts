@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 					this.navigationService.redirectToPrevious();
 				},
 				error: (data)=> {
-					this.loginError = data.error.message;
+					this.loginError = data.error.errorMessage;
 					this.loading = false;
 				}
 			});

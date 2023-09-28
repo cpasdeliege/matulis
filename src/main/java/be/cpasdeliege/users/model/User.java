@@ -62,6 +62,8 @@ public final class User implements UserDetails {
 	boolean accountNonLocked;
 	@JsonIgnore
 	boolean credentialsNonExpired;
+	@JsonIgnore
+	boolean enabled;
 
 	public void setAuthorities(List<String> authoritiesStrings) {
 		authorities = new ArrayList<>();
@@ -76,7 +78,7 @@ public final class User implements UserDetails {
 					hasAnyAuthority = true;
 				}
 			}
-		};
+		}
 		return hasAnyAuthority;
 	}
 

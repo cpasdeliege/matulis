@@ -14,5 +14,6 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
 	private User user;
 	private String errorMessage;
-	private HttpStatus status;
+	@Builder.Default
+	private HttpStatus status = HttpStatus.OK;
 }

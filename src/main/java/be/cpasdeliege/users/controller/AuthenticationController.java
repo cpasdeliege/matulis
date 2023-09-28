@@ -29,14 +29,16 @@ public class AuthenticationController {
 		HttpServletRequest request,
 		HttpServletResponse response
 	) {
-		return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest,request,response));
+		AuthenticationResponse authenticationResponse = authenticationService.authenticate(authenticationRequest,request,response);
+		return ResponseEntity.status(authenticationResponse.getStatus()).body(authenticationResponse);
 	}
 
 	@GetMapping("/check-token")
 	public ResponseEntity<AuthenticationResponse> checkToken(
 		@CookieValue(name = "token", required = false) String token
 	) {
-		return ResponseEntity.ok(authenticationService.isTokenValid(token));
+		AuthenticationResponse authenticationResponse = authenticationService.isTokenValid(token);
+		return ResponseEntity.status(authenticationResponse.getStatus()).body(authenticationResponse);
 	}
 
 	@DeleteMapping("/logout")
