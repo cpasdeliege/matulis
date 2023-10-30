@@ -31,7 +31,8 @@ public class UserService {
     }
 
 	public List<User> findUsersByFullnameContaining(String u) {
-        return userLdapRepository.findUsersByFullnameContaining(u);
+        //return userLdapRepository.findUsersByFullnameContaining(u);
+		return userRepository.findUsersByFullname(u);
     }
 
     public List<User> findAllUsers() {

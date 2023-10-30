@@ -37,7 +37,7 @@
           },
           "configurations": {
             "production": {
-			  "baseHref": "/matulis/",
+			  "baseHref": "/",
               "budgets": [
                 {
                   "type": "initial",
