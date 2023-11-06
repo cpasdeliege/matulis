@@ -30,7 +30,7 @@ public class AuthenticationConfig {
 
 	@Bean 
 	public UserDetailsService userDetailsService() {
-		return username -> userService.findByUsername(username); //.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		return username -> userService.findOneByUsername(username);
 	}
 
 	@Bean
@@ -45,7 +45,6 @@ public class AuthenticationConfig {
 	public AuthenticationManager authenticationManager(BaseLdapPathContextSource contextSource) {
 		LdapBindAuthenticationManagerFactory factory = new LdapBindAuthenticationManagerFactory(contextSource);
 		factory.setUserSearchFilter("(&(objectCategory=person)(objectClass=user)(sAMAccountName={0}))");
-		//factory.setUserSearchBase("ou=cpas");
 		return factory.createAuthenticationManager();
 	}
 

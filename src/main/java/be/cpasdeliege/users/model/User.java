@@ -27,8 +27,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entry(objectClasses = { "person" }, base = "OU=CPAS")
+@Entry(objectClasses = { "person" }) //, base = "OU=CPAS")
 public final class User implements UserDetails {
+
+	public static final String BASE1 = "OU=Administration Centrale,OU=CPAS";
+	public static final String BASE2 = "OU=Sites Distants,OU=CPAS";
 	
 	@Id
 	@JsonSerialize(using = LdapNameSerializer.class)
@@ -37,6 +40,7 @@ public final class User implements UserDetails {
 	
 	@Attribute(name="name") // aussi cn ou displayName
 	private String fullname;
+
 	/*
 	@Attribute(name="givenName")
 	private String firstname;
@@ -44,9 +48,10 @@ public final class User implements UserDetails {
 	@Attribute(name="sn")
 	private String lastname;
 	*/
+
 	@Attribute(name="sAMAccountName")
 	private String username;
-	
+
 	@Attribute(name="memberOf")
 	@JsonIgnore
 	private Collection<GroupAuthority> authorities;

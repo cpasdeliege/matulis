@@ -30,37 +30,7 @@ public class IndexRestController {
 		@RequestParam String username,
 		@NotNull HttpServletRequest request
 	) throws IOException {
-		List<User> users = userService.findUsersByFullnameContaining(username);
-		return ResponseEntity.ok(users);
-    }
-
-	@GetMapping("/test")
-    public Object test(
-		@NotNull HttpServletRequest request
-	) throws IOException {
-		//@CookieValue(name = "token") String token
-	
-		/*
-		boolean authenticated = userService.authenticate("GOMBA","");
-		User user = userService.findByUsername("ULIS");
-		List<String> authorities = new ArrayList<>();
-		if(user.hasAnyAuthority(authorities)){
-			user.setAuthenticated(authenticated);
-		}
-		*/
-		/*
-		var token = "";
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("token")) {
-					token = cookie.getValue();
-					System.out.println("COOKIE : "+ cookie.getValue());
-				}
-			}
-		}
-		*/
-		List<User> users = userService.findAllUsers();
+		List<User> users = userService.findAllByFullname(username);
 		return ResponseEntity.ok(users);
     }
 

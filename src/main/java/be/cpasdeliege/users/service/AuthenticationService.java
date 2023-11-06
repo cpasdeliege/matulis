@@ -40,7 +40,7 @@ public class AuthenticationService {
 	private final List<GroupAuthority> groupAuthorities;
 	
 	public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest, HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-		User user = userService.findByUsername(authenticationRequest.getUsername());
+		User user = userService.findOneByUsername(authenticationRequest.getUsername());
 		String logAction = "login";
 		AuthenticationResponse authenticationResponse = new AuthenticationResponse();
 
@@ -89,7 +89,7 @@ public class AuthenticationService {
 
 		if(jwtToken != null) {
 			String username = jwtService.extractUsername(jwtToken);
-			User user = userService.findByUsername(username);
+			User user = userService.findOneByUsername(username);
 			
 			if(user != null){
 				if (user.hasAnyAuthority(groupAuthorities)){

@@ -32,10 +32,8 @@ public class UserController {
 		@CookieValue(name = "token") String token,
 		HttpServletRequest request
 	) {
-		User user = null;
-		Optional<User> op = userService.findById(userData.getDn());
-		if(op.isPresent()){
-			user = op.get();
+		User user = userService.findOneByDn(userData.getDn());
+		if(user != null){
 			String oldEmployeeID = user.getEmployeeId();
 			if(oldEmployeeID == null || !oldEmployeeID.equals(userData.getEmployeeId())) { // S'il y a bien un changement
 				String newEmployeeID = userData.getEmployeeId() != "" ? userData.getEmployeeId() : null; // LDAP bloque si c'est une chaine vide
@@ -43,10 +41,7 @@ public class UserController {
 				logService.create(jwtService.extractUsername(token), "update", request.getRemoteAddr(), LogStatus.SUCCESS, null, "User", user.getUsername(), "employeeID", oldEmployeeID, userData.getEmployeeId());
 
 				// Màj du User
-				op = userService.findById(userData.getDn());
-				if(op.isPresent()){
-					user = op.get();
-				}
+				user = userService.findOneByDn(userData.getDn());
 			}
 		}
 		return ResponseEntity.ok(user);
