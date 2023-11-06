@@ -34,21 +34,8 @@ public class UserRepository {
 		return authenticated;
 	}
 
-	public User findOneByDn(Name dn) {		
-		LdapQuery query1 = getDnQuery(User.BASE1, dn);
-		LdapQuery query2 = getDnQuery(User.BASE2, dn);
-
-		User user = null;
-		try {
-			user = ldapTemplate.findOne(query1,User.class);
-		} catch (EmptyResultDataAccessException e) {
-			try {
-				user = ldapTemplate.findOne(query2,User.class);
-			} catch (EmptyResultDataAccessException e2) {
-				// aucun utilisateur trouvé
-			}
-		}
-		
+	public User findOneByDn(Name dn) {
+		User user = ldapTemplate.findByDn(dn,User.class);
 		return user;
 	}
 
@@ -95,9 +82,6 @@ public class UserRepository {
 	}
 
 	/* PRIVATE FUNCTIONS */
-	private LdapQuery getDnQuery(String base, Name dn) {
-		return LdapQueryBuilder.query().base(base).where("dn").is(dn.toString());
-	}
 
 	private LdapQuery getUsernameQuery(String base, String username) {
 		return LdapQueryBuilder.query().base(base).where("sAMAccountName").is(username);

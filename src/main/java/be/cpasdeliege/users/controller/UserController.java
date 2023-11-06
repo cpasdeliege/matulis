@@ -1,7 +1,5 @@
 package be.cpasdeliege.users.controller;
 
-import java.util.Optional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,7 +30,9 @@ public class UserController {
 		@CookieValue(name = "token") String token,
 		HttpServletRequest request
 	) {
+		System.out.println(userData.getDn());
 		User user = userService.findOneByDn(userData.getDn());
+		System.out.println(user);
 		if(user != null){
 			String oldEmployeeID = user.getEmployeeId();
 			if(oldEmployeeID == null || !oldEmployeeID.equals(userData.getEmployeeId())) { // S'il y a bien un changement
